@@ -1,6 +1,6 @@
-package cn.springmvc.dao;
+package com.nianhong.dao;
 
-import cn.springmvc.model.User;
+import com.nianhongmodel.User;
 
 
 public interface UserDAO {

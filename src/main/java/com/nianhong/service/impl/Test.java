@@ -1,4 +1,4 @@
-package cn.springmvc.service.impl;
+package com.nianhong.service.impl;
 
 public class Test {
 

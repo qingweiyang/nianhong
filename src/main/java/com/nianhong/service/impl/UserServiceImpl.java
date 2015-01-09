@@ -1,10 +1,11 @@
-package cn.springmvc.service.impl;
+package com.nianhong.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.springmvc.dao.UserDAO;
-import cn.springmvc.model.User;
+import com.nianhong.dao.UserDAO;
+import com.nianhongmodel.User;
+
 import cn.springmvc.service.UserService;
 
 

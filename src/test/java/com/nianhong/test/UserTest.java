@@ -1,11 +1,12 @@
-package cn.springmvc.test;
+package com.nianhong.test;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import cn.springmvc.model.User;
+import com.nianhongmodel.User;
+
 import cn.springmvc.service.UserService;
 
 
@@ -25,7 +26,7 @@ private UserService userService;
 	@Test
 	public void addUser(){
 		User user = new User();
-		user.setId(1);
+		user.setId(3);
 		user.setName("yqw");
 		System.out.println(userService.insertUser(user));
 	}

@@ -1,4 +1,4 @@
-package cn.springmvc.model;
+package com.nianhongmodel;
 
 /**
  * 用户表
