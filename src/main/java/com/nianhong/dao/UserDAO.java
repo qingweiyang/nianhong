@@ -1,6 +1,6 @@
 package com.nianhong.dao;
 
-import com.nianhongmodel.User;
+import com.nianhong.model.User;
 
 
 public interface UserDAO {

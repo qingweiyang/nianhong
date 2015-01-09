@@ -1,4 +1,4 @@
-package com.nianhongmodel;
+package com.nianhong.model;
 
 /**
  * 用户表

@@ -1,6 +1,6 @@
 package cn.springmvc.service;
 
-import com.nianhongmodel.User;
+import com.nianhong.model.User;
 
 
 public interface UserService {
