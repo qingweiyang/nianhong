@@ -5,8 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.nianhong.dao.UserDAO;
 import com.nianhong.model.User;
-
-import cn.springmvc.service.UserService;
+import com.nianhong.service.UserService;
 
 
 @Service

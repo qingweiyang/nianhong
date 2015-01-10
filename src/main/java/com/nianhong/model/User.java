@@ -1,10 +1,6 @@
 package com.nianhong.model;
 
-/**
- * 用户表
- * @author fenghaifeng
- * 2014年2月11日
- */
+
 public class User {
 
 	private int id;

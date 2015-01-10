@@ -6,8 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.nianhong.model.User;
-
-import cn.springmvc.service.UserService;
+import com.nianhong.service.UserService;
 
 
 
@@ -26,7 +25,7 @@ private UserService userService;
 	@Test
 	public void addUser(){
 		User user = new User();
-		user.setId(4);
+		user.setId(6);
 		user.setName("yqw");
 		System.out.println(userService.insertUser(user));
 	}

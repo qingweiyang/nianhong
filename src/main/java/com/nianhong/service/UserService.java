@@ -1,4 +1,4 @@
-package cn.springmvc.service;
+package com.nianhong.service;
 
 import com.nianhong.model.User;
 
