@@ -5,8 +5,8 @@
 <mapper namespace="com.nianhong.dao.UserDAO">
 
          
-         <insert id="insertUser" parameterType="User" keyProperty="id">
-             insert into user(id, name) values (#{id},#{name})  
+         <insert id="insertUser" parameterType="User" keyProperty="username">
+             insert into user(username) values (#{username})  
          </insert>
          
 <!--          <delete id="deleteStudent" parameterType="int">

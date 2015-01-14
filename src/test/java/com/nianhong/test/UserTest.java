@@ -25,8 +25,7 @@ private UserService userService;
 	@Test
 	public void addUser(){
 		User user = new User();
-		user.setId(6);
-		user.setName("yqw");
+		user.setUsername("杨");
 		System.out.println(userService.insertUser(user));
 	}
 }
