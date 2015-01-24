@@ -6,6 +6,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <!-- 命名空间 -->
     <typeAliases>
          <typeAlias alias="User" type="com.nianhong.model.User"/> 
+         <typeAlias alias="Task" type="com.nianhong.model.Task"/> 
+         <typeAlias alias="SubTask" type="com.nianhong.model.SubTask"/> 
+         <typeAlias alias="TaskType" type="com.nianhong.model.TaskType"/> 
+         <typeAlias alias="WaitVerify" type="com.nianhong.model.WaitVerify"/> 
+         <typeAlias alias="SalerTaskDoing" type="com.nianhong.model.SalerTaskDoing"/> 
+         <typeAlias alias="TaskGet" type="com.nianhong.model.TaskGet"/> 
     </typeAliases>
 
     <!-- 映射map -->

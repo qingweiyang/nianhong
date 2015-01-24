@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nianhong.dao.TaskDao">
+
+	<insert id="insertTask" parameterType="Task">
+		insert into task(id, title, publisher, brief, type, commission, advanced, verify, buyer_freeze, saler_freeze, reward, person_need, detail, status, publish_time)
+		values(#{id}, #{title}, #{publisher}, #{brief}, #{type}, #{commission}, #{advanced}, #{verify}, #{buyer_freeze}, #{saler_freeze}, #{reward}, #{person_need}, #{detail}, #{status}, #{publish_time})
+	</insert>
+
+	<select id="selectByStatus" resultType="Task">
+		select * 
+		from task
+		where status = #{status}
+	</select>
+	
+	<select id="selectByPublisher" resultType="Task">
+		select * 
+		from task
+		where status = #{publisher}
+	</select>
+	
+	<select id="selectByPublisherAndStatus" resultType="Task">
+		select * 
+		from task
+		where status = #{status} and publisher = #{publisher}
+	</select>
+	
+	<select id="selectSalerTask" resultType="map">
+		select task.id, task.publish_time, task.brief, task_get.id as taskGetID, task_get.accepter, task_get.accept_time, task_get.finish_time, task_get.status, user.area
+		from task, task_get, user
+		where task.publisher = #{publisher} and task_get.status = #{status} and task.id = task_get.task_id and task_get.accepter=user.username
+	</select>
+	
+	<!-- 
+	<select id="selectWaitVerifyModel" resultType="WaitVerify">
+		select task.id, task.publish_time, task.brief,  task_get.accepter, task_get.accept_time, user.area
+		from task, task_get, user
+		where task.publisher = #{publisher} and task.status = #{status} and task.id = task_get.task_id and task_get.accepter=user.username
+	</select>
+	
+	<select id="selectTaskDoingModel" resultType="SalerTaskDoing">
+		select task.id, task.publish_time, task.brief,  task_get.accepter, task_get.accept_time, task.status
+		from task, task_get
+		where task.publisher = #{publisher} and (task.status = #{status1} or task.status = #{status2}) and task.id = task_get.task_id
+	</select>
+	-->
+	
+	<delete id="deletetTaskByID" parameterType="String">
+		update task set
+		 status = 0
+		where id = #{id}
+	</delete>
+	
+</mapper>

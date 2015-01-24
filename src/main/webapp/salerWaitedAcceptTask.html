@@ -1,0 +1,80 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src="./jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+ 	loadWaitedTable();
+});
+
+/**
+*删除表格的一行，并删除数据库数据
+*/
+function removeRow(id, item) {
+  var param = "id="+id;
+  $.post(
+      "salerTask/deleteTask.do",
+      param,
+      function(data){
+        alert("remove");
+        $(item).parent().parent().remove();
+      }  
+    );
+};
+
+function modifyRow(item) {
+  alert("remove");
+  $(item).parent().parent().remove();
+  // $("#saler-waited-task-table tr:eq(0)").remove();
+};
+
+function loadWaitedTable() {
+  $.ajax({
+      type : "POST",
+      contentType : 'application/json', 
+      url : "salerTask/loadWaitedTask.do",
+      data : {}, 
+      dataType: "json",
+      success : function(data) {
+        var text = "";
+        $.each(data,function(i,item){
+          var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
+          text += "<tr><td>"+item.id+"</td>"+
+                      "<td>"+time+"</td>"+
+                      "<td>"+item.brief+"</td>"+
+                      "<td><a onclick='javascript:modifyRow("+item.id+",this);'>修改</a>"+
+                      "<a onclick='javascript:removeRow("+item.id+",this);'>  删除</a></td></tr>";
+        });
+        $("#saler-waited-task-table tbody").html(text);
+      },
+      error : function(){}
+    });
+};
+
+</script>
+
+
+<table id="saler-waited-task-table" class="table table-bordered table-condensed mt15">
+    <thead>
+      <tr class="active">
+        <th>任务编号</th>
+        <th>发布时间</th>
+        <th>任务概述</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+      <tbody>
+        <tr>
+          <td>000001</td>
+          <td>2015/12/13</td>
+          <td>zhe shi yi fe</td>
+          <td>
+            <a href="#"><span>修改</span></a>
+            <a href="#"><span>删除</span></a>
+          </td>
+        </tr>
+      </tbody>
+</table>

@@ -4,31 +4,43 @@ import java.util.Date;
 
 public class Task {
 	
-	private int id;
+	private String id;
 
+	private String title;
+		
 	private String publisher;
 	
 	private String brief;
 	
-	private String areaProvince;
+	private String type;
 	
-	private String areaCity;
+	//任务佣金
+	private double commission;
+	
+	//垫付金额
+	private double advanced;
 
 	private int verify;
+	
+	private double buyer_freeze;
 
-	private int personNeed;
+	private double saler_freeze;
+
+	private double reward;
+
+	private int person_need;
 
 	private String detail;
 
 	private int status;
 
-	private Date publishTime;
+	private Date publish_time;
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -48,36 +60,12 @@ public class Task {
 		this.brief = brief;
 	}
 
-	public String getAreaProvince() {
-		return areaProvince;
-	}
-
-	public void setAreaProvince(String areaProvince) {
-		this.areaProvince = areaProvince;
-	}
-
-	public String getAreaCity() {
-		return areaCity;
-	}
-
-	public void setAreaCity(String areaCity) {
-		this.areaCity = areaCity;
-	}
-
 	public int getVerify() {
 		return verify;
 	}
 
 	public void setVerify(int verify) {
 		this.verify = verify;
-	}
-
-	public int getPersonNeed() {
-		return personNeed;
-	}
-
-	public void setPersonNeed(int personNeed) {
-		this.personNeed = personNeed;
 	}
 
 	public String getDetail() {
@@ -96,12 +84,76 @@ public class Task {
 		this.status = status;
 	}
 
-	public Date getPublishTime() {
-		return publishTime;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setPublishTime(Date publishTime) {
-		this.publishTime = publishTime;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public double getAdvanced() {
+		return advanced;
+	}
+
+	public void setAdvanced(double advanced) {
+		this.advanced = advanced;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public double getCommission() {
+		return commission;
+	}
+
+	public void setCommission(double commission) {
+		this.commission = commission;
+	}
+
+	public double getBuyer_freeze() {
+		return buyer_freeze;
+	}
+
+	public void setBuyer_freeze(double buyer_freeze) {
+		this.buyer_freeze = buyer_freeze;
+	}
+
+	public double getSaler_freeze() {
+		return saler_freeze;
+	}
+
+	public void setSaler_freeze(double saler_freeze) {
+		this.saler_freeze = saler_freeze;
+	}
+
+	public double getReward() {
+		return reward;
+	}
+
+	public void setReward(double reward) {
+		this.reward = reward;
+	}
+
+	public int getPerson_need() {
+		return person_need;
+	}
+
+	public void setPerson_need(int person_need) {
+		this.person_need = person_need;
+	}
+
+	public Date getPublish_time() {
+		return publish_time;
+	}
+
+	public void setPublish_time(Date publish_time) {
+		this.publish_time = publish_time;
 	}
 
 	

@@ -1,0 +1,65 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>年鸿电商交易平台</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src="./jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="./js/date-helper.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+  alert($("#dropdownMenu1").text());
+  $("#dropdownMenu1").text("")
+});
+
+function removeRow(obj) {
+  alert("remove");
+  alert($(obj).id);
+  alert($(this).id);
+  // alert($(this).val());
+  $(obj).parent().parent().remove();
+  // $("#saler-waited-task-table tr:eq(0)").remove();
+};
+
+function removea(obj) {
+  $(obj).parent().parent().remove();
+};
+</script>
+
+</head>
+<body>
+<div id="wrapper">  
+
+<ul class="nav nav-tabs" role="tablist">
+  <li role="presentation" class="active"><a href="#">待领取</a></li>
+  <li role="presentation"><a href="#">待审核</a></li>
+  <li role="presentation"><a href="#">任务中</a></li>
+  <li role="presentation"><a href="#">已完成</a></li>
+  <li role="presentation"><a href="#">交易失败</a></li>
+</ul>
+
+<div id="test" class="dropdown">
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+    <span>名字</span>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看交易记录</a></li>
+    <li role="presentation" class="divider"></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">同意领取</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">拒绝领取</a></li>
+  </ul>
+</div>
+
+<button id="have">dian wo</button>
+
+</div>
+  
+
+</body>
+</html>

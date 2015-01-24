@@ -1,0 +1,248 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>年鸿电商交易平台</title>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+
+<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src="./jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+  //界面初始化
+  //添加导航栏
+  // var fso = new ActiveXObject("Scripting.FileSystemObject");
+  // var f1 = fso.GetFile("./navigation.html");
+  // alert(f1);
+  // $("#nav").html(f1);
+  // $.include("navigation.html");
+  // $.get("./navigation.html", function(data){
+  //   $("#navigation").append(data);
+  // });
+  // $("#navigation").html("navigation.html");
+
+  
+
+  //地域信息初始化
+  loadProvince();
+  loadCity($("#province-select").val());
+
+  //提交按钮监听
+  $("#publish-button").click(function(){
+    alert("qeq");
+    alert($("form").serialize());
+    var brief = $("#brief-task").val();
+    //是否需要你的审核，是为1，不是为0
+    var verify = ($("#verifyRadio1").attr("checked") == "checked")?1:0
+    var province = $("#province-select option:selected").val();
+    var city = $("#city-select option:selected").val();
+    var number = $("#person-number").val();
+    var finishTime = $("#finish-time").val();
+    var detail = $("#detail").val();
+
+    param = "brief="+brief+"&verify="+verify+"&province="+province+"&city="+city
+            +"&number="+number+"&finishTime="+finishTime+"&detail="+detail;
+    
+    // var test = "title=ll&content=pp";
+    var test = {"title":"its","content":"ok"};
+    var jsonuserinfo = $("form").serialize(); 
+    // var obj = eval(test);
+    //var obj = JSON.parse(jsonuserinfo);
+    alert(test);
+    alert(JSON.stringify(test));
+    alert(test.title);
+    $.ajax({
+      type : "POST",
+      contentType : 'application/json', 
+      url : "test.do",
+      data : JSON.stringify(test), 
+      dataType: "json",
+      success : function(data) {
+        alert(data.title);
+      },
+      error : function(){}
+    });
+
+  });
+
+  //监听 省 选择器的变化
+  $("#province-select").change(function(){
+    loadCity($("#province-select option:selected").val());
+  }); 
+
+  //加载省信息
+  function loadProvince(){
+    $("#province-select").empty();
+    $.post(
+      "loadProvince.do",
+      {},
+      function(data){
+        $.each(eval(data),function(i,item){
+          $("#province-select").append('<option value="'+ item +'">'+ item +'</option>');
+        });
+      }
+      );
+  };
+
+  //加载市信息
+  function loadCity(province){
+    $("#city-select").empty();
+    var city = "province=" + province;
+    $.post(
+      "loadCity.do",
+      city,
+      function(data){
+        $.each(eval(data),function(i,item){
+          $("#city-select").append('<option value="'+ item +'">'+ item +'</option>');
+        });
+      }
+      );
+  };
+
+});
+
+</script>
+
+</head>
+<body>
+<div id="wrapper">  
+
+<div id="navigation"></div>
+
+<!-- 导航栏 -->
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Collect the nav links, forms, and other content for toggling -->
+  <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav">
+      <li id="nav-1"><a href="javascript:changePage(1)">退出登入</a></li>
+      <li class="dropdown">
+        <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">username<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a id="profile" href="javascript:void(0)">个人资料</a></li>
+          <li><a id="edit" href="javascript:void(0)">关系网</a></li>
+          <li class="divider"></li>
+          <li><a href="#">注销</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">我是雇主<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a id="profile" href="javascript:void(0)">发布任务</a></li>
+          <li><a id="edit" href="javascript:void(0)">我的任务</a></li>
+          <li><a id="edit" href="javascript:void(0)">购买积分</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">我是买家<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a id="profile" href="javascript:void(0)">我的任务</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">积分商城<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a id="profile" href="javascript:void(0)">我的积分</a></li>
+          <li><a id="edit" href="javascript:void(0)">积分转赠</a></li>
+          <li><a id="edit" href="javascript:void(0)">购买积分</a></li>
+        </ul>
+      </li>
+      <li id="nav-1"><a href="javascript:changePage(1)">推荐会员</a></li>
+      <li id="nav-2"><a href="javascript:changePage(2)">任务大厅</a></li>
+      <li id="nav-3"><a href="javascript:changePage(3)">站内信</a></li>
+      <li id="nav-3"><a href="javascript:changePage(3)">联系客服</a></li>
+    </ul>
+
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+<!-- 面包屑 -->
+<ol class="breadcrumb">
+  <li><a href="#">主页</a></li>
+  <li><a href="#">我是雇主</a></li>
+  <li class="active">发布任务</li>
+</ol>
+<form id="form1">
+  title<input type="text" name="title">
+  content<input type="text" name="content"> 
+</form>
+<!-- 任务概述 -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">任务概述 ：</h3>
+  </div>
+  <div class="panel-body">
+    <textarea class="form-control" rows=5 id="brief-task" name="abstracts" placeholder="请输入您将要发布的任务概述..."></textarea>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body"> 
+    <div class="row">
+      <label class="col-md-2">是否需要你的审核</label>     
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="verifyRadio1" value="option1" checked="true"> 是
+      </label>
+      <label class="radio-inline">
+        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 否
+      </label>
+    </div>
+    <label class="control-label">（选则“是”后，您未在10分钟内审核该任务将默认允许买家领取）</label>  
+  </div>
+</div>
+
+<!-- 完成者所在地 -->
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <label class="col-md-2">完成者所在地：</label>
+      <select id="province-select" class="col-md-1"></select>
+      <select id="city-select" class="col-md-1"></select>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <label class="col-md-2">完成人数：</label>
+      <input type="number" id="person-number" class="col-md-1">
+      <label class="control-label col-md-2">人</label>
+    </div>
+  </div>
+</div>
+
+<!-- 时间选择 -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">完成时间 ：</h3>
+  </div>
+  <div id="time-selector" class="panel-body">
+    <input type="date" id="finish-time" name="user_date" />
+    <input type="date" id="finish-time" name="user_date" />
+  </div>
+</div>
+
+<!-- 详细描述 -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">详细任务 ：</h3>
+  </div>
+  <div class="panel-body">
+    <textarea class="form-control" rows=7 id="inputAbstract" name="abstracts" placeholder="请输入您将要发布的详细任务..."></textarea>
+  </div>
+</div>
+
+<!-- 提交按钮 -->
+<div class="col-md-4 col-md-offset-4">
+  <button id="publish-button" type="button" class="btn btn-default btn-lg btn-block">确认发布</button>
+</div>
+
+
+</div>
+  
+
+</body>
+</html>

@@ -3,7 +3,7 @@ package com.nianhong.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nianhong.dao.UserDAO;
+import com.nianhong.dao.UserDao;
 import com.nianhong.model.User;
 import com.nianhong.service.UserService;
 
@@ -12,12 +12,11 @@ import com.nianhong.service.UserService;
 public class UserServiceImpl implements UserService{
 
 	@Autowired
-	private UserDAO userDAO;
-	
+	private UserDao userDAO;
+
 	@Override
-	public int insertUser(User user) {
-		// TODO Auto-generated method stub
-		return userDAO.insertUser(user);
+	public User selectByUsernameAndPassword(String username, String password) {
+		return userDAO.selectByUsernameAndPassword(username, password);
 	}
 
 }

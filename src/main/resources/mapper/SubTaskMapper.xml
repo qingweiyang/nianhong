@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nianhong.dao.SubTaskDao">
+
+	<insert id="insertSubTask" parameterType="SubTask">
+		insert into sub_task(id, task_id, start_time, finish_time, province, city, person_need)
+		values(#{id}, #{task_id}, #{start_time}, #{finish_time}, #{province}, #{city}, #{person_need})
+	</insert>
+
+	<delete id="deleteSubTaskByID" parameterType="String">
+		delete
+		from sub_task
+		where id = #{taskID}
+	</delete>
+	
+</mapper>
