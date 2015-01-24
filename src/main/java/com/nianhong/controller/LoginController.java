@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nianhong.model.User;
 import com.nianhong.service.UserService;
@@ -17,13 +18,15 @@ public class LoginController {
 	private UserService userService = ServiceHelper.getUserService();
 	
 	@RequestMapping("login.do")
+	@ResponseBody
 	public String login(HttpServletRequest request, String username, String password){
 		User user = userService.selectByUsernameAndPassword(username, password);
 		if(null != user) {
 			//登入成功
 			request.getSession().setAttribute(Constants.USER, user.getUsername());
+			System.out.println("sss...."+request.getSession().getAttribute(Constants.USER));
 		}
-		return "index";
+		return "success";
 	}
 	
 }

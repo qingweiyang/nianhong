@@ -14,7 +14,10 @@ $(document).ready(function(){
       "login.do",
       param,
       function(data){
-
+        alert(data);
+      	if("success" == data) {
+      		location.href = "../saler/task.html";
+      	}
       }  
     );
 
@@ -25,13 +28,10 @@ $(document).ready(function(){
 </head>
 <body>
 <h2>Hello World!</h2>
-
-<form id="form1">
     
     name:<input id="username" type="text" name="username" size="10">
     password:<input id="password" type="password" name="password" size="10">
     <button id="submit"> sure</button>
-</form>
 
 </body>
 </html>

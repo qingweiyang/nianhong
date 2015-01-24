@@ -4,6 +4,8 @@ import com.nianhong.model.User;
 
 public class LoginInf {
 
+	public static String username;
+	
 	/**
 	 * 获取当前登入的用户
 	 * 

@@ -1,12 +1,26 @@
 
+<script type="text/javascript" src="../jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+function logout() {
+alert("sssss");
+$.post(
+	      "logout.do",
+	      {},
+	      function(data){
+	        location.href = "../login/login.html";
+	      }
+	    );
+}
+</script>
+
 <!-- 导航栏 -->
 <nav class="navbar navbar-default" role="navigation">
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
     <ul class="nav navbar-nav">
-      <li id="nav-1"><a href="javascript:changePage(1)">退出登入</a></li>
+      <li id="nav-1"><a href="javascript:logout()">退出登入</a></li>
       <li class="dropdown">
-        <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">username<b class="caret"></b></a>
+        <a id="username" href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">username<b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a id="profile" href="javascript:void(0)">个人资料</a></li>
           <li><a id="edit" href="javascript:void(0)">关系网</a></li>

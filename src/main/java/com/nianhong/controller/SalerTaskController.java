@@ -20,6 +20,7 @@ import com.nianhong.model.Task;
 import com.nianhong.model.WaitVerify;
 import com.nianhong.service.SalerService;
 import com.nianhong.service.impl.ServiceHelper;
+import com.nianhong.util.LoginInf;
 
 @Controller
 @RequestMapping("saler")
@@ -34,7 +35,7 @@ public class SalerTaskController {
 	@ResponseBody
 	public List<WaitVerify> loadWaitedTask() {
 		SalerService salerService = ServiceHelper.getSalerService();
-		return salerService.selectWaitVerifyTask("杨庆苇");
+		return salerService.selectWaitVerifyTask(LoginInf.username);
 	}
 	
 	/**
@@ -46,7 +47,7 @@ public class SalerTaskController {
 	@ResponseBody
 	public List<HashMap<String, Object>> loadVerifyTask() {
 		SalerService salerService = ServiceHelper.getSalerService();
-		List<HashMap<String, Object>> res = salerService.selectSalerTask("杨庆苇", 1);
+		List<HashMap<String, Object>> res = salerService.selectSalerTask(LoginInf.username, 1);
 		return res;
 	}
 
@@ -60,9 +61,9 @@ public class SalerTaskController {
 	public List<HashMap<String, Object>> loadDoingTask() {
 		SalerService salerService = ServiceHelper.getSalerService();
 		//获取用户正在进行的任务
-		List<HashMap<String, Object>> res = salerService.selectSalerTask("杨庆苇", 2);
+		List<HashMap<String, Object>> res = salerService.selectSalerTask(LoginInf.username, 2);
 		//获取用户已提交完成信息，等待雇主确认的任务
-		res.addAll(salerService.selectSalerTask("杨庆苇", 3));
+		res.addAll(salerService.selectSalerTask(LoginInf.username, 3));
 		return res;
 	}
 	
@@ -75,7 +76,7 @@ public class SalerTaskController {
 	@ResponseBody
 	public List<HashMap<String, Object>> loadFinishTask() {
 		SalerService salerService = ServiceHelper.getSalerService();
-		return salerService.selectSalerTask("杨庆苇", 4);
+		return salerService.selectSalerTask(LoginInf.username, 4);
 	}
 	
 	/**
@@ -87,7 +88,7 @@ public class SalerTaskController {
 	@ResponseBody
 	public List<HashMap<String, Object>> loadFailTask() {
 		SalerService salerService = ServiceHelper.getSalerService();
-		return salerService.selectSalerTask("杨庆苇", 5);
+		return salerService.selectSalerTask(LoginInf.username, 5);
 	}
 	
 	/**

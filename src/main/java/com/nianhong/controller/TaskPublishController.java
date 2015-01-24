@@ -21,6 +21,7 @@ import com.nianhong.model.Test;
 import com.nianhong.service.RegionService;
 import com.nianhong.service.SalerService;
 import com.nianhong.service.impl.ServiceHelper;
+import com.nianhong.util.LoginInf;
 import com.nianhong.vo.TaskVO;
 
 @Controller
@@ -42,7 +43,7 @@ public class TaskPublishController {
 	@ResponseBody
 	public void publishTask(@RequestBody TaskVO st) {
 		SalerService salerService = ServiceHelper.getSalerService();
-		salerService.publishTask("杨庆苇", st);
+		salerService.publishTask(LoginInf.username, st);
 	}
 	
 	/**
