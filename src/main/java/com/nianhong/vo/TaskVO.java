@@ -3,6 +3,8 @@ package com.nianhong.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import com.nianhong.model.Task;
+
 public class TaskVO implements Serializable{
 
 	/**
@@ -36,8 +38,13 @@ public class TaskVO implements Serializable{
 
 	private String detail;
 	
+	private Task taskModel;
+	
 	private List<SubTaskVO> subtask;
 
+	//任务领取的状态［确认领取，待雇主审核，任务已领取］
+	private String accStatus;
+	
 	public List<SubTaskVO> getSubtask() {
 		return subtask;
 	}
@@ -132,6 +139,22 @@ public class TaskVO implements Serializable{
 
 	public void setCommission(double commission) {
 		this.commission = commission;
+	}
+
+	public String getAccStatus() {
+		return accStatus;
+	}
+
+	public void setAccStatus(String accStatus) {
+		this.accStatus = accStatus;
+	}
+
+	public Task getTaskModel() {
+		return taskModel;
+	}
+
+	public void setTaskModel(Task taskModel) {
+		this.taskModel = taskModel;
 	}
 
 	

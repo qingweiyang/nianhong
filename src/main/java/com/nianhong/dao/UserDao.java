@@ -16,5 +16,13 @@ public interface UserDao {
 	 */
 	public User selectByUsernameAndPassword(@Param(value = "username")String username, @Param(value = "password")String password);
 	
+	/**
+	 * 根据用户名和密码选择用户
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public User selectByUsername(@Param(value = "username")String username);
 	
 }

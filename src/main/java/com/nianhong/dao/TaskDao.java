@@ -20,6 +20,31 @@ public interface TaskDao {
 	public int insertTask(Task task);
 	
 	/**
+	 * 根据任务类型选择所有任务（会员专享、平面设计...）
+	 * 
+	 * @param type
+	 * @return
+	 */
+	public List<Task> selectByType(String type);
+	
+	/**
+	 * 根据id获取任务
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Task selectTaskByID(String id);
+	
+	/**
+	 * 根据任务状态（已删除（0）、未删除（1））和类型选择所有任务
+	 * 
+	 * @param status
+	 * @param type
+	 * @return
+	 */
+	public List<Task> selectByStatusAndType(@Param(value = "status") int status, @Param(value = "type")String type);
+	
+	/**
 	 * 根据状态选择任务
 	 * 
 	 * @return

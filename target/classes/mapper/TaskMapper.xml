@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nianhong.dao.TaskDao">
-
+	
 	<insert id="insertTask" parameterType="Task">
 		insert into task(id, title, publisher, brief, type, commission, advanced, verify, buyer_freeze, saler_freeze, reward, person_need, detail, status, publish_time)
 		values(#{id}, #{title}, #{publisher}, #{brief}, #{type}, #{commission}, #{advanced}, #{verify}, #{buyer_freeze}, #{saler_freeze}, #{reward}, #{person_need}, #{detail}, #{status}, #{publish_time})
@@ -13,6 +13,24 @@
 		select * 
 		from task
 		where status = #{status}
+	</select>
+	
+	<select id="selectByType" resultType="Task">
+		select * 
+		from task
+		where type = #{type}
+	</select>
+	
+	<select id="selectTaskByID" resultType="Task">
+		select * 
+		from task
+		where id = #{id}
+	</select>
+	
+	<select id="selectByStatusAndType" resultType="Task">
+		select * 
+		from task
+		where type = #{type} and status = #{status}
 	</select>
 	
 	<select id="selectByPublisher" resultType="Task">

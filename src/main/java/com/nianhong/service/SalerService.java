@@ -20,11 +20,12 @@ public interface SalerService {
 	public boolean publishTask(String user, TaskVO task);
 	
 	/**
-	 * 选择所有任务类型
+	 * 加载任务类别
+	 * 	根据用户权限加载用户拥有的任务类别
 	 * 
 	 * @return
 	 */
-	public List<String> loadType();
+	public List<String> loadType(String user);
 	
 	/**
 	 * 根据权限选择用户相应的任务类型

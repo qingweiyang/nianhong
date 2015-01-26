@@ -1,6 +1,7 @@
 package com.nianhong.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Task {
 	
@@ -36,6 +37,8 @@ public class Task {
 
 	private Date publish_time;
 
+	private List<SubTask> subTasks;
+	
 	public String getId() {
 		return id;
 	}
@@ -154,6 +157,14 @@ public class Task {
 
 	public void setPublish_time(Date publish_time) {
 		this.publish_time = publish_time;
+	}
+
+	public List<SubTask> getSubTasks() {
+		return subTasks;
+	}
+
+	public void setSubTasks(List<SubTask> subTasks) {
+		this.subTasks = subTasks;
 	}
 
 	

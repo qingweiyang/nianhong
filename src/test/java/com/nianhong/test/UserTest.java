@@ -23,7 +23,7 @@ private UserService userService;
 	}
 	
 	@Test
-	public void addUser(){
+	public void testGetTimeSortedTaskByType(){
 		User user = new User();
 		user.setUsername("yy13y");
 //		System.out.println(userService.insertUser(user));

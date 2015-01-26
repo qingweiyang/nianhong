@@ -15,4 +15,15 @@
 		where id = #{taskID}
 	</delete>
 	
+	<select id="selectByID" resultType="SubTask">
+		select * 
+		from sub_task
+		where id = #{id}
+	</select>
+	
+	<select id="selectSubTaskByTaskID" resultType="SubTask">
+		select * 
+		from sub_task
+		where task_id = #{taskID}
+	</select>
 </mapper>

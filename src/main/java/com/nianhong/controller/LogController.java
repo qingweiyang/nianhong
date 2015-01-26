@@ -10,10 +10,16 @@ import com.nianhong.model.User;
 import com.nianhong.service.UserService;
 import com.nianhong.service.impl.ServiceHelper;
 import com.nianhong.util.Constants;
+import com.nianhong.util.LoginInf;
 
+/**
+ * 登入，登出控制器
+ * @author yqw
+ *
+ */
 @Controller
-@RequestMapping("login")
-public class LoginController {
+@RequestMapping(value={"/taskRoom", "/saler", "/login"})
+public class LogController {
 
 	private UserService userService = ServiceHelper.getUserService();
 	
@@ -29,4 +35,11 @@ public class LoginController {
 		return "success";
 	}
 	
+	@RequestMapping("logout.do")
+	@ResponseBody
+	public String login(HttpServletRequest request){
+		request.getSession().removeAttribute(Constants.USER);
+		LoginInf.username = null;
+		return "success";
+	}
 }

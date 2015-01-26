@@ -8,4 +8,11 @@
 		from user
 		where username = #{username} and password = #{password}
 	</select>
+	
+	<select id="selectByUsername" resultType="User">
+		select * 
+		from user
+		where username = #{username}
+	</select>
+	
 </mapper>

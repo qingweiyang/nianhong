@@ -5,6 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.nianhong.service.RegionService;
 import com.nianhong.service.SalerService;
+import com.nianhong.service.TaskService;
 import com.nianhong.service.UserService;
 
 public class ServiceHelper{
@@ -24,4 +25,7 @@ public class ServiceHelper{
 		return (UserService) context.getBean("userServiceImpl");
 	}
 	
+	public static TaskService getTaskService() {
+		return (TaskService) context.getBean("taskServiceImpl");
+	}
 }

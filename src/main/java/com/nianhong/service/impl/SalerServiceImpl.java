@@ -14,9 +14,11 @@ import com.nianhong.dao.SubTaskDao;
 import com.nianhong.dao.TaskDao;
 import com.nianhong.dao.TaskGetDao;
 import com.nianhong.dao.TaskTypeDao;
+import com.nianhong.dao.UserDao;
 import com.nianhong.model.SalerTaskDoing;
 import com.nianhong.model.SubTask;
 import com.nianhong.model.Task;
+import com.nianhong.model.User;
 import com.nianhong.model.WaitVerify;
 import com.nianhong.service.SalerService;
 import com.nianhong.vo.SubTaskVO;
@@ -33,6 +35,8 @@ public class SalerServiceImpl implements SalerService{
 	private TaskTypeDao taskTypeDao;
 	@Autowired
 	private TaskGetDao taskGetDao;
+	@Autowired 
+	private UserDao userDao;
 	
 	@Override
 	public boolean publishTask(String user, TaskVO taskvo) {
@@ -83,8 +87,11 @@ public class SalerServiceImpl implements SalerService{
 	}
 
 	@Override
-	public List<String> loadType() {
-		return taskTypeDao.selectAllType();
+	public List<String> loadType(String user) {
+		User u = userDao.selectByUsername(user);
+		//这里的vip与任务类别权限在数据库中对应
+		int pri = u.getVip();
+		return taskTypeDao.selectTypeByPrivilege(pri);
 	}
 
 	@Override
@@ -130,11 +137,6 @@ public class SalerServiceImpl implements SalerService{
 	@Override
 	public List<SalerTaskDoing> selectDoingTaskModel(String username) {
 		return taskDao.selectTaskDoingModel(username, 3, 4);
-	}
-
-	public void select(String publisher) {
-//		List<Task> tasks = taskDao.selectByPublisher(publisher);
-		
 	}
 	
 	@Override

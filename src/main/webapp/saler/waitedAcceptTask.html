@@ -13,7 +13,6 @@ function removeRow(id, item) {
       "deleteTask.do",
       param,
       function(data){
-        alert("remove");
         $(item).parent().parent().remove();
       }  
     );
@@ -51,7 +50,7 @@ function loadWaitedTable() {
 </script>
 
 
-<table id="saler-waited-task-table" class="table table-bordered table-condensed mt15">
+<table id="saler-waited-task-table" class="table table-bordered table-hover table-condensed mt15">
     <thead>
       <tr class="active">
         <th>任务编号</th>

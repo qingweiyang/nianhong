@@ -4,16 +4,9 @@ $(document).ready(function(){
       dataType: "text",
       url: "../navigation.html",
       success: function(data){
-        $("#wrapper").html(data);
+        $("#nav").html(data);
       },
       error: function(data){}
     }); 
-});
 
-function logout() {
-  $.post(
-      "logout.do",
-      {},
-      function(data){
-    );
-}
+});

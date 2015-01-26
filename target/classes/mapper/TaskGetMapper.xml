@@ -4,10 +4,39 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nianhong.dao.TaskGetDao">
 
+	<insert id="insertTaskGet" parameterType="TaskGet">
+		insert into task_get(id, task_id, sub_task_id, accepter, accept_time, finish_time, status, remark)
+		values(#{id}, #{task_id}, #{sub_task_id}, #{accepter}, #{accept_time}, #{finish_time}, #{status}, #{remark})
+	</insert>
+	
 	<select id="selectByTaskID" resultType="TaskGet">
 		select * 
 		from task_get
 		where task_id = #{taskID}
+	</select>
+	
+	<select id="selectBySubTaskID" resultType="TaskGet">
+		select * 
+		from task_get
+		where sub_task_id = #{subTaskID}
+	</select>
+	
+	<select id="selectBySubTaskIDAndStatus" resultType="TaskGet">
+		select * 
+		from task_get
+		where sub_task_id = #{subTaskID} and status = #{status}
+	</select>
+	
+	<select id="selectBySubTaskIDAndAccepter" resultType="TaskGet">
+		select * 
+		from task_get
+		where sub_task_id = #{subTaskID} and accepter = #{accepter}
+	</select>
+	
+	<select id="selectByAccepterAndTaskID" resultType="TaskGet">
+		select * 
+		from task_get
+		where accepter = #{accepter} and task_id = #{taskID}
 	</select>
 	
 	<select id="selectWaitAcceptByTaskID" resultType="TaskGet">

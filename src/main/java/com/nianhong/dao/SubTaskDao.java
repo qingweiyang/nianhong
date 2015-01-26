@@ -1,5 +1,7 @@
 package com.nianhong.dao;
 
+import java.util.List;
+
 import com.nianhong.model.SubTask;
 
 public interface SubTaskDao {
@@ -18,4 +20,9 @@ public interface SubTaskDao {
 	 * @return
 	 */
 	public int deleteSubTaskByID(String taskID);
+	
+	public List<SubTask> selectSubTaskByTaskID(String taskID);
+
+	public SubTask selectByID(int id);
+
 }
