@@ -70,7 +70,7 @@ function loadTaskTable(type) {
     function(data){
       var text = "";
       $.each(data,function(i,item){
-      var option = "<div><a href='javascript:void(0);' onclick='goodReputation(this, "+item.id+");'>查看详情</a></div>";
+      var option = "<div><a href='javascript:void(0);' onclick='showDetail(this, "+item.id+");'>查看详情</a></div>";
 
       var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
       var finish_time = getFormatDateByLong(item.finish_time, "yyyy-MM-dd hh:mm:ss");
@@ -85,6 +85,11 @@ function loadTaskTable(type) {
     });
 }
 
+/*点击查看详情，跳转至detail.html页面*/
+function showDetail(item, taskID) {
+  location.href = "./detail.html?id="+taskID;
+}
+
 </script>
 
 </head>
@@ -94,7 +99,7 @@ function loadTaskTable(type) {
   <!-- 任务种类面包屑 -->
   <ol id="task-room-breadcrumb" class="breadcrumb mt15">
     <li><a href="#">任务大厅</a></li>
-    <li class="active">Data</li>
+    <li class="active"></li>
   </ol>
 
   <!-- 任务类别选择 -->

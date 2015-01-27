@@ -104,4 +104,13 @@ public interface TaskDao {
 	 * @return
 	 */
 	public List<HashMap<String, Object>> selectSalerTask(@Param(value="publisher") String publisher, @Param(value="status") int status);
+
+	/**
+	 * 根据接受者（买家）名称与状态选择任务
+	 * 
+	 * @param accepter
+	 * @param status
+	 * @return
+	 */
+	public List<HashMap<String, Object>> selectBuyerTask(@Param(value="accepter") String accepter, @Param(value="status") int status);
 }

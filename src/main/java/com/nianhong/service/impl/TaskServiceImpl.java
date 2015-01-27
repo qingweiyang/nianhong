@@ -17,6 +17,7 @@ import com.nianhong.model.Task;
 import com.nianhong.model.TaskGet;
 import com.nianhong.model.User;
 import com.nianhong.service.TaskService;
+import com.nianhong.util.LoginInf;
 import com.nianhong.vo.SalerInfVO;
 import com.nianhong.vo.SubTaskVO;
 import com.nianhong.vo.TaskVO;
@@ -67,6 +68,9 @@ public class TaskServiceImpl implements TaskService{
 
 	@Override
 	public TaskVO getTaskVOByID(String accepter, String taskID) {
+		//accepter被认定为登入用户
+		accepter = LoginInf.username;
+		
 		TaskVO taskVO = new TaskVO();
 		taskVO.setTaskModel(taskDao.selectTaskByID(taskID));
 		

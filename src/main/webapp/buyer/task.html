@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<title>年鸿电商交易平台</title>
+<link rel="stylesheet" type="text/css" href="../css/main.css">
+
+<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src="../jquery/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../js/date-helper.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+  loadNav();
+  changeTab(0);
+});
+
+function loadNav() {
+    $.ajax({  
+      type: "post",
+      dataType: "text",
+      url: "../nav/navigation.html",
+      success: function(data){
+        $("#nav").html(data);
+      },
+      error: function(data){}
+    }); 
+}
+
+function changeTab(index) {
+  var page_map = new Array(
+                 "waitedVerifyTask.html",
+                 "doingTask.html",
+                 "finishTask.html",
+                 "failTask.html"); 
+
+  $.ajax({  
+      type: "post",
+      dataType: "text",
+      url: page_map[index],
+      success: function(data){
+        $("#saler-task-container").html(data);
+        $("#saler-task-tab li").each(function(i, item){
+          if(index == i) {
+            $(item).attr("class", "active");
+          } else {
+            $(item).removeClass("active");
+          }
+          
+        });
+      },
+      error: function(data){}
+    }); 
+
+};
+
+
+</script>
+
+</head>
+<body>
+<div id="wrapper">  
+<div id="nav"></div>
+
+<ul id="saler-task-tab" class="nav nav-tabs" role="tablist">
+  <li role="presentation"><a href="javascript:changeTab(0)">待审核</a></li>
+  <li role="presentation"><a href="javascript:changeTab(1)">任务中</a></li>
+  <li role="presentation" class="active"><a href="javascript:changeTab(2)">已完成</a></li>
+  <li role="presentation"><a href="javascript:changeTab(3)">交易失败</a></li>
+</ul>
+
+<div id="saler-task-container"></div>
+
+</div>
+  
+
+</body>
+</html>

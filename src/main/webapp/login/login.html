@@ -5,7 +5,6 @@
 
 $(document).ready(function(){
  	$("#submit").click(function(){
-	alert("ok");
 	var param = {};
 	param.username = $("#username").val();
 	param.password = $("#password").val();
@@ -14,7 +13,6 @@ $(document).ready(function(){
       "login.do",
       param,
       function(data){
-        alert(data);
       	if("success" == data) {
       		location.href = "../saler/task.html";
       	}

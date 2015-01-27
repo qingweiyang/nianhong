@@ -3,6 +3,7 @@ package com.nianhong.service.impl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.nianhong.service.BuyerService;
 import com.nianhong.service.RegionService;
 import com.nianhong.service.SalerService;
 import com.nianhong.service.TaskService;
@@ -27,5 +28,9 @@ public class ServiceHelper{
 	
 	public static TaskService getTaskService() {
 		return (TaskService) context.getBean("taskServiceImpl");
+	}
+	
+	public static BuyerService getBuyerService() {
+		return (BuyerService) context.getBean("buyerServiceImpl");
 	}
 }

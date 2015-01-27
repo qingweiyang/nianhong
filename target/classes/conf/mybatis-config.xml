@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
          <typeAlias alias="WaitVerify" type="com.nianhong.model.WaitVerify"/> 
          <typeAlias alias="SalerTaskDoing" type="com.nianhong.model.SalerTaskDoing"/> 
          <typeAlias alias="TaskGet" type="com.nianhong.model.TaskGet"/> 
+         <typeAlias alias="Integral" type="com.nianhong.model.Integral"/> 
     </typeAliases>
 
     <!-- 映射map -->

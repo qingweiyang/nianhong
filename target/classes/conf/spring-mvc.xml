@@ -26,7 +26,7 @@
 	</bean>
 	-->
 	
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+<!-- 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
     <property name="messageConverters">
     <list>
         <bean class="org.springframework.http.converter.StringHttpMessageConverter">
@@ -39,7 +39,7 @@
         <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
     </list>
     </property>
-</bean>
+</bean> -->
 	
 	<!--  
 	<bean id="mappingJacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
@@ -54,5 +54,5 @@
 	
    <!-- 对模型视图添加前后缀 -->
      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
-      p:prefix="/WEB-INF/jsp/" p:suffix=".jsp"/>
+      p:prefix="/WEB-INF/" p:suffix=".html"/>
 </beans>

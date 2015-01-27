@@ -14,8 +14,23 @@
 
 $(document).ready(function(){
   loadNav();
-  loadType();
+
+  /*解析url，加载任务详情*/
+  var taskID = getUrlParam("id");
+  loadTaskInf(taskID, "路人");
+
+  /*监听接受任务按钮*/
+  $("#accept-button").click(function(){
+  	acceptTask();
+  });
 });
+
+/*解析url，获取url中的参数值*/
+function getUrlParam(name) {
+	var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+	if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
 
 function loadNav() {
     $.ajax({  
@@ -29,9 +44,67 @@ function loadNav() {
     }); 
 }
 
-<!-- 改变面包屑的值 -->
+/* 改变面包屑的值 */
 function changeBreadcrumb(type) {
   $("#task-room-breadcrumb li:eq(1)").html(type);
+}
+
+function acceptTask() {
+	if($("#accept-button").text() == "确认领取") {
+		var param = {};
+		var item = $("input[name='subTaskRadios']:checked");
+		param.id = item.parent().parent().children("td:eq(0)").children("label").text();
+		param.accepter = "路人";
+
+		//领取任务
+		$.post(
+			"acceptTask.do",
+			param,
+			function(data) {
+				alert(data.success);
+			}
+			); 
+	}
+}
+
+/* 加载任务的具体信息，并添加用户能否接受该任务状态 */
+function loadTaskInf(taskID, accepter) {
+	//改变面包屑导航的值，显示当前任务id
+	$("#taskid-breadcrumb").text("任务编号："+taskID);
+
+	var param = {};
+	param.taskID = taskID;
+	param.accepter = accepter;
+
+	$.post(
+		"loadTaskInf.do",
+		param,
+		function(data){
+			$("#title").text(data.taskModel.title);
+			$("#brief").text(data.taskModel.brief);
+			$("#type").text(data.taskModel.type);
+			$("#commission").text(data.taskModel.commission);
+			$("#advanced").text(data.taskModel.advanced);
+			$("#reward").text(data.taskModel.reward);
+			$("#buyer_freeze").text(data.taskModel.buyer_freeze);
+			$("#person_need").text(data.taskModel.person_need);
+			var subTasks = data.subtask;
+			var text = "";
+        	$.each(subTasks,function(i,item){
+          		var time = getFormatDateByLong(item.subTaskModel.start_time, "yy-MM-dd hh:mm");
+          		time += " ~ "+getFormatDateByLong(item.subTaskModel.finish_time, "yy-MM-dd hh:mm");
+          		var area = item.subTaskModel.province+" "+item.subTaskModel.city;
+          		text += "<tr>"+
+          			  "<td><label class='sr-only'>"+item.subTaskModel.id+"</label><input type='radio' name='subTaskRadios' value='option1'></td>"+
+                      "<td>"+time+"</td>"+
+                      "<td>"+area+"</td>"+
+                      "<td>"+item.subTaskModel.person_need+"</td>"+
+                      "<td>"+item.actSubNum+"</td>"+
+                      "</tr>";
+        		});
+        	$("#subtask-table tbody").html(text);
+        	$("#accept-button").text(data.accStatus);
+		});
 }
 
 function loadSalerInf(username) {
@@ -54,11 +127,9 @@ function loadSalerInf(username) {
 <div id="nav"></div>
   <!-- 任务种类面包屑 -->
   <ol id="task-room-breadcrumb" class="breadcrumb mt15">
-    <li><a href="#">任务大厅</a></li>
-    <li class="active">Data</li>
+    <li><a href="../taskRoom/mainRoom.html">任务大厅</a></li>
+    <li id="taskid-breadcrumb" class="active"></li>
   </ol>
-
-
 
 <div class="container">
 	<div class="row clearfix">
@@ -66,73 +137,103 @@ function loadSalerInf(username) {
 			<div class="list-group">
 				 <a href="#" class="list-group-item active">卖家信息</a>
 				<div class="list-group-item">
-					<h5>雇主昵称 ：<small id="salerName"></small></h4>
-					<h5>会员等级 ：<small id="salerLever"></small></h4>
-					<h5>资  质 ：<small id="taskBaby"></small></h4>
+					<h5>雇主昵称 ：<small id="salerName"></small></h5>
+					<h5>会员等级 ：<small id="salerLever"></small></h5>
+					<h5>资  质 ：<small id="taskBaby"></small></h5>
 				</div>
 				<a href="#" class="list-group-item active">双方交易记录展示</a>
 				<div class="list-group-item">
-					<h5>本周 ：<small id="salerName">0</small>笔</h4>
-					<h5>本月 ：<small id="salerLever"></small>笔</h4>
-					<h5>本年 ：<small id="taskBaby"></small>笔</h4>
+					<h5>本周 ：<small id="salerName">0</small>笔</h5>
+					<h5>本月 ：<small id="salerLever"></small>笔</h5>
+					<h5>本年 ：<small id="taskBaby"></small>笔</h5>
 				</div>
 				<a href="#" class="list-group-item active">卖家已向买家承诺</a>
 				<div class="list-group-item">
-					<h5>本周<small id="salerName">0</small>笔</h4>
-					<h5>本月<small id="salerLever"></small>笔</h4>
-					<h5>本年<small id="taskBaby"></small>笔</h4>
+					<h5>本周<small id="salerName">0</small>笔</h5>
+					<h5>本月<small id="salerLever"></small>笔</h5>
+					<h5>本年<small id="taskBaby"></small>笔</h5>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-9 column">
-			<dl class="dl-horizontal">
-				<dt>
-					任务标题
-				</dt>
-				<dd>
-					A description list is perfect for defining terms.
-				</dd>
-				<dt>
-					任务信息
-				</dt>
-				<dd>
-					Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.
-				</dd>
-				<dt>
-					任务佣金
-				</dt>
-				<dd>
-					Etiam porta sem malesuada magna mollis euismod.
-				</dd>
-				<dt>
-					任务奖励
-				</dt>
-				<dd>
-					Etiam porta sem malesuada magna mollis euismod.
-				</dd>
-				<dd>
-					接受此任务需要赞赏冻结您“任务宝” 200 积分
-				</dd>
-				<dt>
-					完成任务总人数
-				</dt>
-				<dd>
-					Etiam porta sem malesuada magna mollis euismod.
-				</dd>
-				<dt>
-					任务预制
-				</dt>
-				<dd>
-					Etiam porta sem malesuada magna mollis euismod.
-				</dd>
-				<dt>
-					详细要求
-				</dt>
-				<dd>
-					Etiam porta sem malesuada magna mollis euismod.
-				</dd>
-				
-			</dl>
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<p class="text-left">任务标题</p>
+				</div>
+				<div class="col-md-7 column">
+					<p id="title" class="text-left"></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<p class="text-left">任务概述</p>
+				</div>
+				<div class="col-md-7 column">
+					<p id="brief" class="text-left"></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<p class="text-left">任务类别</p>
+				</div>
+				<div class="col-md-7 column">
+					<p id="type" class="text-left"></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<p class="text-left">任务佣金</p>
+				</div>
+				<div class="col-md-3 column">
+					<p id="commission" class="text-left"></p>
+				</div>
+				<div class="col-md-4 column">
+					<p class="text-left">雇主要求买家垫付金额 ：<small id="advanced"></small></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<p class="text-left">任务奖励</p>
+				</div>
+				<div class="col-md-7 column">
+					<p id="reward" class="text-left"></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-9 column">
+					<p class="text-left">接受此任务需要暂时冻结您“任务宝” :<small id="buyer_freeze"></small></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-2 column">
+					<p class="text-left">完成总人数</p>
+				</div>
+				<div class="col-md-7 column">
+					<p id="person_need" class="text-left"></p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-9 column">
+					<p class="text-left">任务预制 ：</p>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<table id="subtask-table" class="table table-hover table-condensed">
+					<thead>
+					<tr>
+						<th>选择</th>
+						<th>完成时间</th>
+						<th>完成者地区要求</th>
+						<th>人数要求</th>
+						<th>已接受人数</th>
+					</tr>
+					</thead>
+					<tbody></tbody>
+				</table>
+			</div>
+			<div class="row clearfix">
+				<div class="col-md-4 col-md-offset-8"><button id="accept-button" type="button" class="btn btn-block btn-info"></button></div>
+			</div>
 		</div>
 	</div>
 </div>
