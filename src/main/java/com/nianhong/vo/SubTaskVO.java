@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.nianhong.model.SubTask;
+import com.nianhong.model.Task;
 
 public class SubTaskVO implements Serializable{
 
@@ -27,6 +28,8 @@ public class SubTaskVO implements Serializable{
 	private int subNum;
 	
 	private SubTask subTaskModel;
+	
+	private Task taskModel;
 	
 	//实际子任接受者务数量（状态1～4，排除已删除与交易失败的状态）
 	private int actSubNum;
@@ -101,6 +104,14 @@ public class SubTaskVO implements Serializable{
 
 	public void setSubTaskModel(SubTask subTaskModel) {
 		this.subTaskModel = subTaskModel;
+	}
+
+	public Task getTaskModel() {
+		return taskModel;
+	}
+
+	public void setTaskModel(Task taskModel) {
+		this.taskModel = taskModel;
 	}
 
 	

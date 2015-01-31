@@ -24,4 +24,14 @@ public interface BuyerService {
 	 * @return
 	 */
 	public List<HashMap<String, Object>> selectBuyerTask(String username, int status);
+	
+	/**
+	 * 买家任务完成后提交完成信息
+	 * 
+	 * @param username
+	 * @param subTaskID
+	 * @return
+	 */
+	public boolean submitTask(String username, int subTaskID, String describe, 
+			String picAddress, int personInf, String others);
 }

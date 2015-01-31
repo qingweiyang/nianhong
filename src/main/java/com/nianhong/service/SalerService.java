@@ -64,7 +64,7 @@ public interface SalerService {
 	/**
 	 * 根据雇主名称与状态选择任务
 	 * 	任务格式与 我是雇主 我的任务 待领取 一致
-	 * loadDoingTask
+	 * 
 	 * @param username
 	 * @param status
 	 * @return

@@ -25,6 +25,7 @@ public class Test {
 				,"classpath:conf/spring-mybatis.xml"});
 		SalerService s = (SalerService) context.getBean("salerServiceImpl");
 		System.out.println(s.agreeAccepter("20150120144506", "路人家"));
+		System.out.println(System.getProperty("user.dir"));
 //		List<HashMap<String, Object>> mod = s.test("杨庆苇", 1);
 //		System.out.println(mod.get(0).get("publish_time"));
 //		s.selectByPublisherAndStatus("yqw", 1);

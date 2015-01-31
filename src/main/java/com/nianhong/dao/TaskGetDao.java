@@ -44,6 +44,14 @@ public interface TaskGetDao {
 	public List<TaskGet> selectWaitAcceptByTaskID(String taskID);
 	
 	/**
+	 * 根据TaskGet的id为主键，更新除ID外的所有属性值
+	 * 
+	 * @param taskGet
+	 * @return
+	 */
+	public boolean updateTaskGet(TaskGet taskGet);
+	
+	/**
 	 * 更新task_get表的状态值
 	 * 
 	 * @param taskID

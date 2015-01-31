@@ -109,4 +109,14 @@ public class TaskServiceImpl implements TaskService{
 		return taskVO;
 	}
 
+	@Override
+	public SubTaskVO getTaskVOBySubtaskID(String accepter, int subtaskid) {
+		SubTaskVO stvo = new SubTaskVO();
+		SubTask st = subTaskDao.selectByID(subtaskid);
+		stvo.setSubTaskModel(st);
+		stvo.setTaskModel(taskDao.selectTaskByID(st.getTask_id()));
+		
+		return stvo;
+	}
+
 }

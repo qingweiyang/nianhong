@@ -24,4 +24,9 @@ public class BuyerServiceImplTest {
 	public void acceptTask() {
 		buyerService.acceptTask("路人", 2);
 	}
+	
+	@Test
+	public void submitTask() {
+		buyerService.submitTask("路人", 2, "nhe32123g", "aaa&nnnn", 12, "");
+	}
 }

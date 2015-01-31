@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nianhong.model.Task;
 import com.nianhong.vo.SalerInfVO;
+import com.nianhong.vo.SubTaskVO;
 import com.nianhong.vo.TaskVO;
 
 /**
@@ -45,4 +46,13 @@ public interface TaskService {
 	 * @return
 	 */
 	public TaskVO getTaskVOByID(String accepter, String taskID);
+
+	/**
+	 * 根据任务subtaskid获取任务信息，信息格式为subtaskVO
+	 * 
+	 * @param accepter
+	 * @param taskID
+	 * @return
+	 */
+	public SubTaskVO getTaskVOBySubtaskID(String accepter, int subtaskid);
 }

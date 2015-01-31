@@ -5,8 +5,8 @@
 <mapper namespace="com.nianhong.dao.TaskGetDao">
 
 	<insert id="insertTaskGet" parameterType="TaskGet">
-		insert into task_get(id, task_id, sub_task_id, accepter, accept_time, finish_time, status, remark)
-		values(#{id}, #{task_id}, #{sub_task_id}, #{accepter}, #{accept_time}, #{finish_time}, #{status}, #{remark})
+		insert into task_get(id, task_id, sub_task_id, accepter, accept_time, finish_time, status, remark, description, pic_address, personal_inf, others)
+		values(#{id}, #{task_id}, #{sub_task_id}, #{accepter}, #{accept_time}, #{finish_time}, #{status}, #{remark}, #{description}, #{pic_address}, #{personal_inf}, #{others})
 	</insert>
 	
 	<select id="selectByTaskID" resultType="TaskGet">
@@ -47,6 +47,22 @@
               and status > 1 and status <> 5  
         	]]>
 	</select>
+	
+	<!-- 根据TaskGet的id为主键，更新除ID外的所有属性值 -->
+	<update id="updateTaskGet" parameterType="TaskGet">
+		update task_get set
+			task_id = #{task_id},
+			sub_task_id = #{sub_task_id},
+			accepter = #{accepter},
+			accept_time = #{accept_time},
+			finish_time = #{finish_time},
+			status = #{status},
+			remark = #{remark},
+			pic_address = #{pic_address},
+			personal_inf = #{personal_inf},
+			description = #{description}
+		where id = #{id}	
+	</update>
 	
 	<update id="updateStatusByTaskIDAndAccepter">
 		update task_get set

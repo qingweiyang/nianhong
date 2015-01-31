@@ -4,46 +4,11 @@ $(document).ready(function(){
  	loadWaitedTable();
 });
 
-/*雇主中止交易
-*    将该条子任务状态改为 交易失败；从表格中删除该行
+/*买家提交完成任务信息
+*    param 子任务id
 */
-function suspendDeal(item, taskGetID) {
-  var param = {};
-  //子任务ID
-  param.taskGetID = taskGetID;
-  
-  $.post(
-      "suspendDeal.do",
-      param,
-      function(data){
-        if(data == true) {
-          $(item).parent().parent().parent().remove();          
-        } else {
-          alert("拒绝失败");
-        }
-      }  
-    );
-}
-
-/*雇主确认交易完成
-*    将该条子任务状态改为 交易完成；从表格中删除该行
-*/
-function sureDeal(item, taskGetID) {
-  var param = {};
-  //子任务ID
-  param.taskGetID = taskGetID;
-  
-  $.post(
-      "sureDeal.do",
-      param,
-      function(data){
-        if(data == true) {
-          $(item).parent().parent().parent().remove();          
-        } else {
-          alert("拒绝失败");
-        }
-      }  
-    );
+function submitTaskInf(subTaskID) {
+  location.href = "./SubmitTaskInf.html?subTaskID="+subTaskID;
 }
 
 function loadWaitedTable() {
@@ -59,7 +24,7 @@ function loadWaitedTable() {
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
           var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
           var status_show;
-          var option = "<div><a href='javascript:void(0);' onclick='suspendDeal(this, "+item.taskGetID+");'>提交完成信息</a></div>";
+          var option = "<div><a href='javascript:void(0);' onclick='submitTaskInf("+item.sub_task_id+");'>提交完成信息</a></div>";
 
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+

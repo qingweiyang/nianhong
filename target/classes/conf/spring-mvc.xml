@@ -11,7 +11,7 @@
     http://www.springframework.org/schema/context/spring-context-3.2.xsd
     http://www.springframework.org/schema/mvc
     http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
-    
+
     <mvc:annotation-driven/>
     <!-- 扫描controller（controller层注入） -->
    <context:component-scan base-package="com.nianhong.controller"/>
@@ -52,7 +52,18 @@
 	</bean>
 	-->
 	
+<bean id="multipartResolver"  
+      class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
+       <!-- set the max upload size100MB -->  
+   <property name="maxUploadSize">  
+       <value>8000000</value>  
+   </property>  
+   <property name="maxInMemorySize">  
+       <value>4096</value>  
+   </property>  
+  </bean>  
+  
    <!-- 对模型视图添加前后缀 -->
      <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" 
-      p:prefix="/WEB-INF/" p:suffix=".html"/>
+      p:prefix="/" p:suffix=".html"/>
 </beans>
