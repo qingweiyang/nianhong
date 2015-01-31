@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -70,6 +72,7 @@ function refuseAccept(item) {
 }
 
 function loadWaitedTable() {
+  var param = {"status":1};
   $.ajax({
       type : "POST",
       contentType : 'application/json', 
@@ -83,9 +86,10 @@ function loadWaitedTable() {
           var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
-                      "<td>"+acc_time+"</td>"+
                       "<td>"+item.brief+"</td>"+
-                      "<td>"+getVerifyBuyerButton(item.publisher)+"</td>"+
+                      "<td>"+getVerifyBuyerButton(item.accepter)+"</td>"+
+                      "<td>"+acc_time+"</td>"+
+                      "<td>"+item.area+"</td>"+
                       "</tr>";
         });
         $("#saler-waited-task-table tbody").html(text);
@@ -110,9 +114,10 @@ function getVerifyBuyerButton(name) {
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">交易记录</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看交易记录</a></li>
     <li role="presentation" class="divider"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);">雇主信誉</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" onclick="agreeAccept(this)">同意领取</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" onclick="refuseAccept(this)">拒绝领取</a></li>
   </ul>
 </div>
 </div>
@@ -122,9 +127,10 @@ function getVerifyBuyerButton(name) {
       <tr class="active">
         <th>任务编号</th>
         <th>发布时间</th>
-        <th>接收时间</th>
         <th>任务概述</th>
-        <th>发布者</th>
+        <th>领取人</th>
+        <th>领取时间</th>
+        <th>所在地</th>
       </tr>
     </thead>
       <tbody>

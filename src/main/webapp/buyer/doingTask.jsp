@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -8,8 +10,10 @@ $(document).ready(function(){
 *    param 子任务id
 */
 function submitTaskInf(subTaskID) {
-  location.href = "./SubmitTaskInf.html?subTaskID="+subTaskID;
+  location.href = "./SubmitTaskInf.jsp?subTaskID="+subTaskID;
 }
+
+
 
 function loadWaitedTable() {
   $.ajax({

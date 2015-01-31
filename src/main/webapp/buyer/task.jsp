@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>年鸿电商交易平台</title>
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 
@@ -14,28 +15,15 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  loadNav();
   changeTab(0);
 });
 
-function loadNav() {
-    $.ajax({  
-      type: "post",
-      dataType: "text",
-      url: "../nav/navigation.html",
-      success: function(data){
-        $("#nav").html(data);
-      },
-      error: function(data){}
-    }); 
-}
-
 function changeTab(index) {
   var page_map = new Array(
-                 "waitedVerifyTask.html",
-                 "doingTask.html",
-                 "finishTask.html",
-                 "failTask.html"); 
+                 "waitedVerifyTask.jsp",
+                 "doingTask.jsp",
+                 "finishTask.jsp",
+                 "failTask.jsp"); 
 
   $.ajax({  
       type: "post",
@@ -63,7 +51,8 @@ function changeTab(index) {
 </head>
 <body>
 <div id="wrapper">  
-<div id="nav"></div>
+	<!-- 导航栏 -->
+  <%@ include file="../nav/navigation.jsp" %>
 
 <ul id="saler-task-tab" class="nav nav-tabs" role="tablist">
   <li role="presentation"><a href="javascript:changeTab(0)">待审核</a></li>

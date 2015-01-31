@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -29,20 +31,24 @@ function loadWaitedTable() {
   $.ajax({
       type : "POST",
       contentType : 'application/json', 
-      url : "loadFailTask.do",
+      url : "loadFinishTask.do",
       data : {}, 
       dataType: "json",
       success : function(data) {
         var text = "";
         $.each(data,function(i,item){
+          var option = "<div><a href='javascript:void(0);' onclick='goodReputation(this, "+item.taskGetID+");'>好评</a></div>";
+          option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'>差评</a></div>";
+          option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'>投诉</a></div>";
+
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
-          var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
+          var finish_time = getFormatDateByLong(item.finish_time, "yyyy-MM-dd hh:mm:ss");
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
                       "<td>"+item.brief+"</td>"+
                       "<td>"+getVerifyBuyerButton(item.publisher)+"</td>"+
-                      "<td>"+acc_time+"</td>"+
-                      "<td>"+item.remark+"</td>"+
+                      "<td>"+finish_time+"</td>"+
+                      "<td>"+option+"</td>"+
                       "</tr>";
         });
         $("#saler-waited-task-table tbody").html(text);
@@ -82,9 +88,9 @@ function getVerifyBuyerButton(name) {
         <th>任务编号</th>
         <th>发布时间</th>
         <th>任务概述</th>
-        <th>发布者</th>
-        <th>接受时间</th>
-        <th>失败原因</th>
+        <th>发布者者</th>
+        <th>完成时间</th>
+        <th>操作</th>
       </tr>
     </thead>
       <tbody>

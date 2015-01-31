@@ -1,56 +1,81 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
  	loadWaitedTable();
 });
 
-/*雇主中止交易
-*    将该条子任务状态改为 交易失败；从表格中删除该行
+/**
+*删除表格的一行，并删除数据库数据
 */
-function suspendDeal(item, taskGetID) {
-  var param = {};
-  //子任务ID
-  param.taskGetID = taskGetID;
-  
+function removeRow(id, item) {
+  var param = "id="+id;
   $.post(
-      "suspendDeal.do",
+      "deleteTask.do",
       param,
       function(data){
-        if(data == true) {
-          $(item).parent().parent().parent().remove();          
-        } else {
-          alert("拒绝失败");
-        }
+        alert("remove");
+        $(item).parent().parent().remove();
       }  
     );
-}
+};
 
-/*雇主确认交易完成
-*    将该条子任务状态改为 交易完成；从表格中删除该行
+function modifyRow(item) {
+  alert("remove");
+  $(item).parent().parent().remove();
+  // $("#saler-waited-task-table tr:eq(0)").remove();
+};
+
+/**
+*同意买家领取任务
 */
-function sureDeal(item, taskGetID) {
+function agreeAccept(item) {
   var param = {};
-  //子任务ID
-  param.taskGetID = taskGetID;
-  
+  //获取接受者姓名
+  param.accepter = $(item).parent().parent().parent().find(".username-span").html();
+  //获取任务id
+  param.taskID = $(item).parent().parent().parent().parent().parent().children("td:eq(0)").html();
   $.post(
-      "sureDeal.do",
+      "agreeAccepter.do",
       param,
       function(data){
         if(data == true) {
-          $(item).parent().parent().parent().remove();          
+          $(item).parent().parent().parent().parent().parent().remove();          
+        } else {
+          alert("同意失败");
+        }
+      }  
+    );
+
+};
+
+/*拒绝买家领取任务*/
+function refuseAccept(item) {
+  var param = {};
+  //获取接受者姓名
+  param.accepter = $(item).parent().parent().parent().find(".username-span").html();
+  //获取任务id
+  param.taskID = $(item).parent().parent().parent().parent().parent().children("td:eq(0)").html();
+  $.post(
+      "refuseAccepter.do",
+      param,
+      function(data){
+        if(data == true) {
+          $(item).parent().parent().parent().parent().parent().remove();          
         } else {
           alert("拒绝失败");
         }
       }  
     );
+
 }
 
 function loadWaitedTable() {
   $.ajax({
       type : "POST",
       contentType : 'application/json', 
-      url : "loadDoingTask.do",
+      url : "loadVerifyTask.do",
       data : {}, 
       dataType: "json",
       success : function(data) {
@@ -58,25 +83,11 @@ function loadWaitedTable() {
         $.each(data,function(i,item){
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
           var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
-          var status_show;
-          var option;
-          if(item.status == 2) {
-            status_show = "等待买家完成提交";
-            option = "<div><a href='javascript:void(0);' onclick='suspendDeal(this, "+item.taskGetID+");'>中止交易</a></div>";
-            option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'> 确认完成</a></div>";
-          } else if(item.status == 3) {
-            status_show = "买家已确认提交";
-            option = "<div><a href='javascript:void(0);' onclick='showMessage(this, "+item.taskGetID+");'>查看信息</a></div>";
-            option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'> 确认完成</a></div>";
-          }
-
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
-                      "<td>"+item.brief+"</td>"+
-                      "<td>"+getVerifyBuyerButton(item.accepter)+"</td>"+
                       "<td>"+acc_time+"</td>"+
-                      "<td>"+status_show+"</td>"+
-                      "<td>"+option+"</td>"+
+                      "<td>"+item.brief+"</td>"+
+                      "<td>"+getVerifyBuyerButton(item.publisher)+"</td>"+
                       "</tr>";
         });
         $("#saler-waited-task-table tbody").html(text);
@@ -101,8 +112,9 @@ function getVerifyBuyerButton(name) {
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看交易记录</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">交易记录</a></li>
     <li role="presentation" class="divider"></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);">雇主信誉</a></li>
   </ul>
 </div>
 </div>
@@ -112,11 +124,9 @@ function getVerifyBuyerButton(name) {
       <tr class="active">
         <th>任务编号</th>
         <th>发布时间</th>
+        <th>接收时间</th>
         <th>任务概述</th>
-        <th>接受者</th>
-        <th>接受时间</th>
-        <th>完成状态</th>
-        <th>操作</th>
+        <th>发布者</th>
       </tr>
     </thead>
       <tbody>

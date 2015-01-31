@@ -1,9 +1,5 @@
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-<script type="text/javascript" src="./jquery/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -16,10 +12,9 @@ $(document).ready(function(){
 function removeRow(id, item) {
   var param = "id="+id;
   $.post(
-      "salerTask/deleteTask.do",
+      "deleteTask.do",
       param,
       function(data){
-        alert("remove");
         $(item).parent().parent().remove();
       }  
     );
@@ -35,7 +30,7 @@ function loadWaitedTable() {
   $.ajax({
       type : "POST",
       contentType : 'application/json', 
-      url : "salerTask/loadWaitedTask.do",
+      url : "loadWaitedTask.do",
       data : {}, 
       dataType: "json",
       success : function(data) {
@@ -45,8 +40,8 @@ function loadWaitedTable() {
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
                       "<td>"+item.brief+"</td>"+
-                      "<td><a onclick='javascript:modifyRow("+item.id+",this);'>修改</a>"+
-                      "<a onclick='javascript:removeRow("+item.id+",this);'>  删除</a></td></tr>";
+                      "<td><a href='javascript:void(0);' onclick='javascript:modifyRow("+item.id+",this);'>修改</a>"+
+                      "<a href='javascript:void(0);' onclick='javascript:removeRow("+item.id+",this);'>  删除</a></td></tr>";
         });
         $("#saler-waited-task-table tbody").html(text);
       },
@@ -57,7 +52,7 @@ function loadWaitedTable() {
 </script>
 
 
-<table id="saler-waited-task-table" class="table table-bordered table-condensed mt15">
+<table id="saler-waited-task-table" class="table table-bordered table-hover table-condensed mt15">
     <thead>
       <tr class="active">
         <th>任务编号</th>
@@ -67,14 +62,5 @@ function loadWaitedTable() {
       </tr>
     </thead>
       <tbody>
-        <tr>
-          <td>000001</td>
-          <td>2015/12/13</td>
-          <td>zhe shi yi fe</td>
-          <td>
-            <a href="#"><span>修改</span></a>
-            <a href="#"><span>删除</span></a>
-          </td>
-        </tr>
       </tbody>
 </table>

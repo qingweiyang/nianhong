@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>年鸿电商交易平台</title>
 
 <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
@@ -15,8 +16,7 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  loadNav();
-
+	
   /*解析url，加载任务详情*/
   var taskID = getUrlParam("subTaskID");
   loadSubTaskInf(taskID);
@@ -114,7 +114,8 @@ function fileChange(target,id) {
 
   <div class="row clearfix">
     <div class="col-md-12 column">
-      <div id="nav"></div>
+      <!-- 导航栏 -->
+  	  <%@ include file="../nav/navigation.jsp" %>
     </div>
   </div>
 

@@ -1,80 +1,58 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
  	loadWaitedTable();
 });
 
-/**
-*删除表格的一行，并删除数据库数据
+/*雇主中止交易
+*    将该条子任务状态改为 交易失败；从表格中删除该行
 */
-function removeRow(id, item) {
-  var param = "id="+id;
-  $.post(
-      "deleteTask.do",
-      param,
-      function(data){
-        alert("remove");
-        $(item).parent().parent().remove();
-      }  
-    );
-};
-
-function modifyRow(item) {
-  alert("remove");
-  $(item).parent().parent().remove();
-  // $("#saler-waited-task-table tr:eq(0)").remove();
-};
-
-/**
-*同意买家领取任务
-*/
-function agreeAccept(item) {
+function suspendDeal(item, taskGetID) {
   var param = {};
-  //获取接受者姓名
-  param.accepter = $(item).parent().parent().parent().find(".username-span").html();
-  //获取任务id
-  param.taskID = $(item).parent().parent().parent().parent().parent().children("td:eq(0)").html();
+  //子任务ID
+  param.taskGetID = taskGetID;
+  
   $.post(
-      "agreeAccepter.do",
+      "suspendDeal.do",
       param,
       function(data){
         if(data == true) {
-          $(item).parent().parent().parent().parent().parent().remove();          
-        } else {
-          alert("同意失败");
-        }
-      }  
-    );
-
-};
-
-/*拒绝买家领取任务*/
-function refuseAccept(item) {
-  var param = {};
-  //获取接受者姓名
-  param.accepter = $(item).parent().parent().parent().find(".username-span").html();
-  //获取任务id
-  param.taskID = $(item).parent().parent().parent().parent().parent().children("td:eq(0)").html();
-  $.post(
-      "refuseAccepter.do",
-      param,
-      function(data){
-        if(data == true) {
-          $(item).parent().parent().parent().parent().parent().remove();          
+          $(item).parent().parent().parent().remove();          
         } else {
           alert("拒绝失败");
         }
       }  
     );
+}
 
+/*雇主确认交易完成
+*    将该条子任务状态改为 交易完成；从表格中删除该行
+*/
+function sureDeal(item, taskGetID) {
+  var param = {};
+  //子任务ID
+  param.taskGetID = taskGetID;
+  
+  $.post(
+      "sureDeal.do",
+      param,
+      function(data){
+        if(data == true) {
+          $(item).parent().parent().parent().remove();          
+        } else {
+          alert("拒绝失败");
+        }
+      }  
+    );
 }
 
 function loadWaitedTable() {
-  var param = {"status":1};
   $.ajax({
       type : "POST",
       contentType : 'application/json', 
-      url : "loadVerifyTask.do",
+      url : "loadDoingTask.do",
       data : {}, 
       dataType: "json",
       success : function(data) {
@@ -82,12 +60,25 @@ function loadWaitedTable() {
         $.each(data,function(i,item){
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
           var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
+          var status_show;
+          var option;
+          if(item.status == 2) {
+            status_show = "等待买家完成提交";
+            option = "<div><a href='javascript:void(0);' onclick='suspendDeal(this, "+item.taskGetID+");'>中止交易</a></div>";
+            option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'> 确认完成</a></div>";
+          } else if(item.status == 3) {
+            status_show = "买家已确认提交";
+            option = "<div><a href='javascript:void(0);' onclick='showMessage(this, "+item.taskGetID+");'>查看信息</a></div>";
+            option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'> 确认完成</a></div>";
+          }
+
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
                       "<td>"+item.brief+"</td>"+
                       "<td>"+getVerifyBuyerButton(item.accepter)+"</td>"+
                       "<td>"+acc_time+"</td>"+
-                      "<td>"+item.area+"</td>"+
+                      "<td>"+status_show+"</td>"+
+                      "<td>"+option+"</td>"+
                       "</tr>";
         });
         $("#saler-waited-task-table tbody").html(text);
@@ -114,8 +105,6 @@ function getVerifyBuyerButton(name) {
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看交易记录</a></li>
     <li role="presentation" class="divider"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" onclick="agreeAccept(this)">同意领取</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:void(0);" onclick="refuseAccept(this)">拒绝领取</a></li>
   </ul>
 </div>
 </div>
@@ -126,9 +115,10 @@ function getVerifyBuyerButton(name) {
         <th>任务编号</th>
         <th>发布时间</th>
         <th>任务概述</th>
-        <th>领取人</th>
-        <th>领取时间</th>
-        <th>所在地</th>
+        <th>接受者</th>
+        <th>接受时间</th>
+        <th>完成状态</th>
+        <th>操作</th>
       </tr>
     </thead>
       <tbody>

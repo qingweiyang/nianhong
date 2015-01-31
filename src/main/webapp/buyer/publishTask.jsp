@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>年鸿电商交易平台</title>
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 
@@ -12,19 +13,16 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-  loadNav();
   loadType();
   //地域信息初始化
   loadProvince();
   loadCity("江苏省");
-
   $("#add-subtask").click(function(){
     $("#subtask").after($("#subtask").clone(true));
   });
   $(".remove-subtask").click(function(){
     $(this).parent().remove();
   });
-
   $("#publish-button").click(function(){
     var task = {};
     task.title = $("#title").val();
@@ -38,7 +36,6 @@ $(document).ready(function(){
     task.reward = $("#reward-input").val();
     task.personNeed = $("#person-number").val();
     task.detail = $("#detail").val();
-
     task.subtask = [];
     $(".subtask-item").each(function(index, item){
       alert(($(item).children("input:eq(0)")).val());
@@ -51,7 +48,6 @@ $(document).ready(function(){
       task.subtask.push(row);
     });
     alert(JSON.stringify(task));
-
     $.ajax({
       type : "POST",
       contentType : 'application/json', 
@@ -63,15 +59,12 @@ $(document).ready(function(){
       },
       error : function(){}
     });
-
   });
 });
-
   //监听 省 选择器的变化
   $("#province-select").change(function(){
     loadCity($("#province-select option:selected").val());
   }); 
-
   //加载省信息
   function loadProvince(){
     $("#province-select").empty();
@@ -85,7 +78,6 @@ $(document).ready(function(){
       }
       );
   };
-
   //加载市信息
   function loadCity(province){
     $("#city-select").empty();
@@ -100,7 +92,6 @@ $(document).ready(function(){
       }
       );
   };
-
 function loadType() {
   $.ajax({
       type : "POST",
@@ -117,24 +108,14 @@ function loadType() {
     });
 };
 
-function loadNav() {
-    $.ajax({  
-      type: "post",
-      dataType: "text",
-      url: "../nav/navigation.html",
-      success: function(data){
-        $("#nav").html(data);
-      },
-      error: function(data){}
-    }); 
-}
-
 </script>
 
 </head>
 <body>
 <div id="wrapper">  
-<div id="nav"></div>
+
+	<!-- 导航栏 -->
+  <%@ include file="../nav/navigation.jsp" %>
 
 <form class="form-horizontal" role="form">
 

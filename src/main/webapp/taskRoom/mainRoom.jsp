@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>年鸿电商交易平台</title>
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 
@@ -14,21 +15,8 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  loadNav();
   loadType();
 });
-
-function loadNav() {
-    $.ajax({  
-      type: "post",
-      dataType: "text",
-      url: "../nav/navigation.html",
-      success: function(data){
-        $("#nav").html(data);
-      },
-      error: function(data){}
-    }); 
-}
 
 /*根据数据库type类型加载用户当前能看到的所有任务类型*/
 function loadType() {
@@ -53,7 +41,7 @@ function loadType() {
     });
 }
 
-<!-- 改变面包屑的值 -->
+/*-- 改变面包屑的值 --*/
 function changeBreadcrumb(type) {
   $("#task-room-breadcrumb li:eq(1)").html(type);
 }
@@ -87,7 +75,7 @@ function loadTaskTable(type) {
 
 /*点击查看详情，跳转至detail.html页面*/
 function showDetail(item, taskID) {
-  location.href = "./detail.html?id="+taskID;
+  location.href = "./detail.jsp?id="+taskID;
 }
 
 </script>
@@ -95,7 +83,10 @@ function showDetail(item, taskID) {
 </head>
 <body>
 <div id="wrapper">  
-<div id="nav"></div>
+
+  <!-- 导航栏 -->
+  <%@ include file="../nav/navigation.jsp" %>
+  
   <!-- 任务种类面包屑 -->
   <ol id="task-room-breadcrumb" class="breadcrumb mt15">
     <li><a href="#">任务大厅</a></li>

@@ -1,9 +1,5 @@
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-<script type="text/javascript" src="./jquery/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -16,7 +12,7 @@ $(document).ready(function(){
 function removeRow(id, item) {
   var param = "id="+id;
   $.post(
-      "salerTask/deleteTask.do",
+      "deleteTask.do",
       param,
       function(data){
         alert("remove");
@@ -35,38 +31,53 @@ function loadWaitedTable() {
   $.ajax({
       type : "POST",
       contentType : 'application/json', 
-      url : "salerTask/loadWaitedTask.do",
+      url : "loadFinishTask.do",
       data : {}, 
       dataType: "json",
       success : function(data) {
         var text = "";
         $.each(data,function(i,item){
+          var option = "<div><a href='javascript:void(0);' onclick='goodReputation(this, "+item.taskGetID+");'>好评</a></div>";
+          option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'>差评</a></div>";
+          option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'>投诉</a></div>";
+
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
+          var finish_time = getFormatDateByLong(item.finish_time, "yyyy-MM-dd hh:mm:ss");
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
                       "<td>"+item.brief+"</td>"+
-                      "<td>"+$("#test").html()+"</td>"+
+                      "<td>"+getVerifyBuyerButton(item.accepter)+"</td>"+
+                      "<td>"+finish_time+"</td>"+
+                      "<td>"+option+"</td>"+
                       "</tr>";
         });
         $("#saler-waited-task-table tbody").html(text);
       },
       error : function(){}
     });
+
+};
+
+function getVerifyBuyerButton(name) {
+  $(".username-span").text(name);
+  return $("#test").html();
 };
 
 </script>
 
-<div id="test">
+<!-- 领取人按钮 -->
+<div id="test" style="display:none">
 <div class="dropdown">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-    张三
+  <button class="btn btn-default dropdown-toggle" id="testbutton" type="button" data-toggle="dropdown" aria-expanded="true">
+    <span class="username-span"></span>
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看交易记录</a></li>
     <li role="presentation" class="divider"></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">同意领取</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">拒绝领取</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">好评</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">差评</a></li>
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">投诉</a></li>
   </ul>
 </div>
 </div>
@@ -77,9 +88,9 @@ function loadWaitedTable() {
         <th>任务编号</th>
         <th>发布时间</th>
         <th>任务概述</th>
-        <th>领取人</th>
-        <th>领取时间</th>
-        <th>所在地</th>
+        <th>接受者</th>
+        <th>完成时间</th>
+        <th>操作</th>
       </tr>
     </thead>
       <tbody>

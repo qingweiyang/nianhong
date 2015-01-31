@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/main/webapp/saler/doingTask.jsp=UTF-8
+encoding//src/main/webapp/saler/failTask.jsp=UTF-8
+encoding//src/main/webapp/saler/finishTask.jsp=UTF-8

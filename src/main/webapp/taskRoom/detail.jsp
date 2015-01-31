@@ -1,6 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>年鸿电商交易平台</title>
 <link rel="stylesheet" type="text/css" href="../css/main.css">
 
@@ -14,7 +16,6 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  loadNav();
 
   /*解析url，加载任务详情*/
   var taskID = getUrlParam("id");
@@ -25,18 +26,6 @@ $(document).ready(function(){
   	acceptTask();
   });
 });
-
-function loadNav() {
-    $.ajax({  
-      type: "post",
-      dataType: "text",
-      url: "../nav/navigation.html",
-      success: function(data){
-        $("#nav").html(data);
-      },
-      error: function(data){}
-    }); 
-}
 
 /* 改变面包屑的值 */
 function changeBreadcrumb(type) {
@@ -118,10 +107,12 @@ function loadSalerInf(username) {
 </head>
 <body>
 <div id="wrapper">  
-<div id="nav"></div>
+  <!-- 导航栏 -->
+  <%@ include file="../nav/navigation.jsp" %>
+  
   <!-- 任务种类面包屑 -->
   <ol id="task-room-breadcrumb" class="breadcrumb mt15">
-    <li><a href="../taskRoom/mainRoom.html">任务大厅</a></li>
+    <li><a href="../taskRoom/mainRoom.jsp">任务大厅</a></li>
     <li id="taskid-breadcrumb" class="active"></li>
   </ol>
 

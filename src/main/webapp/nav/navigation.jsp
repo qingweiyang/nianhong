@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <script type="text/javascript" src="../jquery/jquery-1.11.2.min.js"></script>
 
 <script type="text/javascript">
@@ -20,7 +22,7 @@ $.post(
 	      "logout.do",
 	      {},
 	      function(data){
-	        location.href = "../login/login.html";
+	        location.href = "../login/login.jsp";
 	      }
 	    );
 }
@@ -44,8 +46,8 @@ $.post(
       <li class="dropdown">
         <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">我是雇主<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a id="profile" href="../saler/publishTask.html">发布任务</a></li>
-          <li><a id="edit" href="../saler/task.html">我的任务</a></li>
+          <li><a id="profile" href="../saler/publishTask.jsp">发布任务</a></li>
+          <li><a id="edit" href="../saler/task.jsp">我的任务</a></li>
           <li><a id="edit" href="javascript:void(0)">加入任务宝</a></li>
           <li><a id="edit" href="javascript:void(0)">购买积分</a></li>
         </ul>
@@ -53,7 +55,7 @@ $.post(
       <li class="dropdown">
         <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">我是买家<b class="caret"></b></a>
         <ul class="dropdown-menu">
-          <li><a id="profile" href="../buyer/task.html">我的任务</a></li>
+          <li><a id="profile" href="../buyer/task.jsp">我的任务</a></li>
           <li><a id="edit" href="javascript:void(0)">加入任务宝</a></li>
         </ul>
       </li>
@@ -66,7 +68,7 @@ $.post(
         </ul>
       </li>
       <li id="nav-1"><a href="javascript:changePage(1)">推荐会员</a></li>
-      <li id="nav-2"><a href="../taskRoom/mainRoom.html">任务大厅</a></li>
+      <li id="nav-2"><a href="../taskRoom/mainRoom.jsp">任务大厅</a></li>
       <li id="nav-3"><a href="javascript:changePage(3)">站内信</a></li>
       <li id="nav-3"><a href="javascript:changePage(3)">联系客服</a></li>
     </ul>
