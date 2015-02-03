@@ -9,6 +9,12 @@
 		values(#{id}, #{task_id}, #{sub_task_id}, #{accepter}, #{accept_time}, #{finish_time}, #{status}, #{remark}, #{description}, #{pic_address}, #{personal_inf}, #{others})
 	</insert>
 	
+	<select id="selectByID" resultType="TaskGet">
+		select * 
+		from task_get
+		where id = #{id}
+	</select>
+	
 	<select id="selectByTaskID" resultType="TaskGet">
 		select * 
 		from task_get

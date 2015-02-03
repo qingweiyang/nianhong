@@ -103,22 +103,22 @@ public class BuyerTaskController {
 	@RequestMapping(value = "submitTaskInf.do")
 	public String submitTaskInf(HttpServletRequest request,HttpServletResponse response) {//获取子任务id
 		//获取子任务的id(通过在form表单中增加隐藏input获取)
-		int subTaskID = Integer.parseInt(request.getParameter("subTaskID"));
+		int taskGetID = Integer.parseInt(request.getParameter("taskGetID"));
 		//获取前端文字描述信息
 		String description = request.getParameter("description");
 		//获取个人信息(三项，按2进制结果表示)
 		int personInf = 0;
 		if(null != request.getParameter("inlineCheckbox1")) {
 			//银行卡
-			personInf += 8;
+			personInf += 4;
 		}
 		if(null != request.getParameter("inlineCheckbox2")) {
 			//财富通
-			personInf += 4;
+			personInf += 2;
 		}
 		if(null != request.getParameter("inlineCheckbox3")) {
 			//支付宝
-			personInf += 2;
+			personInf += 1;
 		}
 		
 		//其他信息
@@ -131,11 +131,11 @@ public class BuyerTaskController {
 		String picPath = "";
 		String realpath = request.getSession().getServletContext().getRealPath("/");
 		System.out.println(realpath);
-		//判断用户提交图片的文件夹是否存在(默认所有图片放在upload/username文件夹中,username为用户名)
-		String folder = realpath+"upload/"+LoginInf.username+"/";
+		//判断用户提交图片的文件夹是否存在(默认所有图片放在upload/文件夹中,文件名＝taskGetID+filename)
+		String folder = realpath+"upload/";
 		File uploadFolder  = new File(folder);
 		if(!uploadFolder.exists()) {
-			uploadFolder.mkdirs();
+			uploadFolder.mkdir();
 		}
 		//创建一个通用的多部分解析器.   
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -148,7 +148,7 @@ public class BuyerTaskController {
 			java.util.Iterator<String> iter = multiRequest.getFileNames();
 			while(iter.hasNext()){
 				MultipartFile file = multiRequest.getFile(iter.next());
-				String fileName = file.getOriginalFilename();
+				String fileName = taskGetID+"_"+file.getOriginalFilename();
 				if(null == fileName || fileName.equals("")) {
 					//未上传图片，可接受，跳出循环
 					break;
@@ -157,6 +157,7 @@ public class BuyerTaskController {
 				//所有图片路径保存在数据库中为相对路径，及文件名称，取数据时加上folder
 				picPath += fileName+"&";
 				File localFile = new File(path);
+				System.out.println(path);
 				try {
 					file.transferTo(localFile);
 				} catch (IllegalStateException e) {
@@ -168,7 +169,7 @@ public class BuyerTaskController {
 			}
 		}		
 		//调用上传信息服务
-		buyerService.submitTask(LoginInf.username, subTaskID, description, picPath, personInf, others);
+		buyerService.submitTask(taskGetID, description, picPath, personInf, others);
 		return "buyer/submitTaskEnd";
 	}
 }

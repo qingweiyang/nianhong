@@ -15,21 +15,8 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-  loadNav();
   changeTab(0);
 });
-
-function loadNav() {
-    $.ajax({  
-      type: "post",
-      dataType: "text",
-      url: "../nav/navigation.jsp",
-      success: function(data){
-        $("#nav").html(data);
-      },
-      error: function(data){}
-    }); 
-}
 
 function changeTab(index) {
   var page_map = new Array("waitedAcceptTask.jsp",
@@ -64,7 +51,9 @@ function changeTab(index) {
 </head>
 <body>
 <div id="wrapper">  
-<div id="nav"></div>
+
+  <!-- 导航栏 -->
+  <%@ include file="../nav/navigation.jsp" %>
 
 <ul id="saler-task-tab" class="nav nav-tabs" role="tablist">
   <li role="presentation" class="active"><a href="javascript:changeTab(0)">待领取</a></li>

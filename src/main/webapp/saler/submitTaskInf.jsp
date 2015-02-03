@@ -16,19 +16,77 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	
   /*解析url，加载任务详情*/
-  var taskID = getUrlParam("subTaskID");
-  loadSubTaskInf(taskID);
+  var taskGetID = getUrlParam("taskGetID");
 
   /*将子任务id作为参数，暂时保存在提交表单中*/
-  $("#taskGetID").val(getUrlParam("taskGetID"));
-  
-  $("#add-file-btn").click(function(){
-		$(this).parent().before('<input type="file" onchange="fileChange(this);" class="form-control-static" name="image" size="16">');
-	});
+  //$("#subTaskID").val(taskID);
 
+  loadBuyerSubmitInf(taskGetID);
+
+
+  /*雇主确认买家完成任务*/
+  $("#sure-btn").click(function(){
+    $.post("sureDeal.do", "taskGetID="+taskGetID ,function(data){
+        location.href = "./sureEnd.jsp";
+    });
+
+  });
 });
+
+/*加载用户提交完成任务确认的信息，参数：taskGetid*/
+function loadBuyerSubmitInf(taskGetID) {
+	var param = {};
+	param.taskGetID = taskGetID;
+	$.post("loadBuyerSubmitInf.do", 
+			param,
+			function(data){
+        //填写任务具体信息
+        $("#title").text(data.taskModel.title);
+        $("#brief").text(data.taskModel.brief);
+        $("#type").text(data.taskModel.type);
+        $("#commission").text(data.taskModel.commission);
+        $("#advanced").text(data.taskModel.advanced);
+        $("#reward").text(data.taskModel.reward);
+        $("#buyer_freeze").text(data.taskModel.buyer_freeze);
+        var time = getFormatDateByLong(data.subTaskModel.start_time, "yy-MM-dd hh:mm");
+        time += " ~ "+getFormatDateByLong(data.subTaskModel.finish_time, "yy-MM-dd hh:mm");
+        $("#finishTime").text(time);
+        var area = data.subTaskModel.province+" "+data.subTaskModel.city;
+        $("#area").text(area);
+        $("#person_need").text(data.subTaskModel.person_need);
+        $("#detail").text(data.taskModel.detail);
+
+
+        //买家提交的任务完成信息
+        $("#buyer-description").text(data.taskGetModel.description);
+
+        //图片信息
+        var picContent = "";
+        //定义每行展示的图片数量
+        var mloop = 4;
+        $.each(data.picPaths, function(i, item){
+        	 $("#picInf").append('<img src="getPic.do?fileName='+item+'" height="200" width="200"/>');
+           if(i%mloop == 0) {
+              picContent += '<div class="row clearfix mt15">';
+            }
+            picContent += '<div class="col-md-4 column"><img class="img-thumbnail img-responsive" src="getPic.do?fileName='+item+'" /></div>';
+          if(i%mloop == (mloop-1)) {
+            typeContent += "</div>";
+          }
+        });
+       $("#picInf").html(picContent);
+
+
+       //买家提交的个人信息
+       var person_inf = "";
+       $.each(data.personInf, function(key, value){
+    	   person_inf += '<dd>'+key+':'+value+'</dd>';
+       });
+       $("#person-inf").after(person_inf);
+	});
+	
+}
 
 /*加载子任务的具体信息，参数：子任务id*/
 function loadSubTaskInf(subTaskID) {
@@ -56,59 +114,6 @@ function loadSubTaskInf(subTaskID) {
 }
 
 
-var isIE = /msie/i.test(navigator.userAgent) && !window.opera; 
-
-/*对上传对图片大小与格式进行筛选*/
-function fileChange(target,id) { 
-	var fileSize = 0; 
-	var filetypes =[".jpg",".png"]; 
-	var filepath = target.value; 
-	var filemaxsize = 1024*2;//2M 
-	if(filepath){ 
-	var isnext = false; 
-	var fileend = filepath.substring(filepath.indexOf(".")); 
-	if(filetypes && filetypes.length>0){ 
-	for(var i =0; i<filetypes.length;i++){ 
-	if(filetypes[i]==fileend){ 
-	isnext = true; 
-	break; 
-	} 
-	} 
-	} 
-	if(!isnext){ 
-	alert("不接受此文件类型！"); 
-	target.value =""; 
-	return false; 
-	} 
-	}else{ 
-	return false; 
-	} 
-	if (isIE && !target.files) { 
-	var filePath = target.value; 
-	var fileSystem = new ActiveXObject("Scripting.FileSystemObject"); 
-	if(!fileSystem.FileExists(filePath)){ 
-	alert("附件不存在，请重新输入！"); 
-	return false; 
-	} 
-	var file = fileSystem.GetFile (filePath); 
-	fileSize = file.Size; 
-	} else { 
-	fileSize = target.files[0].size; 
-	} 
-	 
-	var size = fileSize / 1024; 
-	if(size>filemaxsize){ 
-	alert("附件大小不能大于"+filemaxsize/1024+"M！"); 
-	target.value =""; 
-	return false; 
-	} 
-	if(size<=0){ 
-	alert("附件大小不能为0M！"); 
-	target.value =""; 
-	return false; 
-	} 
-	} 
-
 </script>
 
 </head>
@@ -134,6 +139,10 @@ function fileChange(target,id) {
           </h3>
         </div>
         <div class="panel-body">
+
+          <div class="row clearfix">
+            <div class="col-md-6 column">
+
           <dl class="dl-horizontal">
             <dt>任务标题</dt>
             <dd id="title"></dd>
@@ -158,6 +167,11 @@ function fileChange(target,id) {
             <dt>任务奖励</dt>
             <dd id="reward"></dd>
           </dl>
+
+            </div>
+            <div class="col-md-6 column">
+
+              
           <dl class="dl-horizontal">
             <dt>需暂时冻结您“任务宝”</dt>
             <dd id="buyer_freeze"></dd>
@@ -178,6 +192,10 @@ function fileChange(target,id) {
             <dt>详细要求</dt>
             <dd id="detail"></dd>
           </dl>
+
+            </div>
+          </div>
+
         </div>
       </div>
       
@@ -185,60 +203,31 @@ function fileChange(target,id) {
       <div class="panel panel-success">
         <div class="panel-heading">
           <h3 class="panel-title">
-            提交您的任务完成信息
+            买家已提交任务完成信息：
           </h3>
         </div>
         <div class="panel-body">
-          
-  <div class="row clearfix">
-    <div class="col-md-12 column">
-      <form role="form" action="submitTaskInf.do" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-           <input id="taskGetID" type="hidden" name ="taskGetID">
-           <label for="exampleInputEmail1">文字描述：</label>
-           <textarea class="form-control" rows=5 id="brief-task" name="description" placeholder="请输入完成任务概述..."></textarea>
-        </div>
-        <div class="form-group">
-           <label for="exampleInputFile">图片详情：</label>
-           <div id="picInf">
-           	  <input type="file" name="file" onchange="fileChange(this);" />
-              <div class="mt10 form-control-static"><a id="add-file-btn" href="javascipt:void()"><span class="glyphicon glyphicon-plus-sign"></span> Add File</a></div>
-           </div>
-        </div>
-
-      <div class="alert alert-dismissable alert-danger">
-        交易成功后，所有的交易图片信息本站3个工作日后默认清除，如有需要请自行保存
-        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-      </div>
-
-        <div class="form-group">
-          <label for="exampleInputEmail1">向雇主提交个人信息：</label>
-        </div>
-        <div class="form-group">
-<label class="checkbox-inline">
-  <input type="checkbox" name ="inlineCheckbox1" value="option1"> 银行卡
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" name ="inlineCheckbox2" value="option2"> 财富通
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" name ="inlineCheckbox3" value="option3"> 支付宝
-</label>
-        </div>
-
-        <div class="form-group">
-          <label class="checkbox">
-            <input type="checkbox" name="inlineCheckbox4" value="option4"> 其他
-          </label>
-          <textarea class="form-control" rows=3 id="brief-task" name="others" placeholder="请输入其他信息..."></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-default">点击提交</button>
-      </form>
-    </div>
-  </div>
+          <div class="col-md-10 col-md-offset-1">
+          <dl>
+            <dt>文字描述：</dt>
+            <dd id="buyer-description"></dd>
+          </dl>
+          <dl>
+            <dt>图片详情：</dt>
+            <dd id="picInf"></dd>
+          </dl>
+          <dl>
+            <dt id="person-inf" class="mt15">买家提交的个人信息：</dt>
+          </dl>
 
         </div>
+        
+        	<div class="col-md-4 col-md-offset-8">
+        		<button id="sure-btn" type="button" class="btn btn-block btn-info">确认买家已完成您的任务</button>
+        	</div>
+        
+        </div>
+        
         <div class="panel-footer">
         </div>
       </div>

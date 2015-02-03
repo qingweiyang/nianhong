@@ -48,6 +48,11 @@ function sureDeal(item, taskGetID) {
     );
 }
 
+/*雇主查看买家提交信息*/
+function showMessage(taskGetID) {
+  location.href = "./submitTaskInf.jsp?&taskGetID="+taskGetID;
+}
+
 function loadWaitedTable() {
   $.ajax({
       type : "POST",
@@ -68,7 +73,7 @@ function loadWaitedTable() {
             option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'> 确认完成</a></div>";
           } else if(item.status == 3) {
             status_show = "买家已确认提交";
-            option = "<div><a href='javascript:void(0);' onclick='showMessage(this, "+item.taskGetID+");'>查看信息</a></div>";
+            option = "<div><a href='javascript:void(0);' onclick='showMessage("+item.taskGetID+");'>查看信息</a></div>";
             option += "<div><a href='javascript:void(0);' onclick='sureDeal(this, "+item.taskGetID+");'> 确认完成</a></div>";
           }
 

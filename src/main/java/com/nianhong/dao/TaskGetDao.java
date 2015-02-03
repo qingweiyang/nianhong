@@ -23,6 +23,8 @@ public interface TaskGetDao {
 	 * @return
 	 */
 	public List<TaskGet> selectByTaskID(String taskID);
+	
+	public TaskGet selectByID(int id);
 
 	public List<TaskGet> selectBySubTaskID(int subTaskID);
 

@@ -32,6 +32,5 @@ public interface BuyerService {
 	 * @param subTaskID
 	 * @return
 	 */
-	public boolean submitTask(String username, int subTaskID, String describe, 
-			String picAddress, int personInf, String others);
+	public boolean submitTask(int taskGetID, String describe, String picAddress, int personInf, String others);
 }

@@ -27,6 +27,6 @@ public class BuyerServiceImplTest {
 	
 	@Test
 	public void submitTask() {
-		buyerService.submitTask("路人", 2, "nhe32123g", "aaa&nnnn", 12, "");
+		buyerService.submitTask( 2, "nhe32123g", "aaa&nnnn", 12, "");
 	}
 }

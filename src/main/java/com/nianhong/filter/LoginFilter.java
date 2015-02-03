@@ -37,10 +37,10 @@ public class LoginFilter implements Filter{
         if(session.getAttribute(Constants.USER)==null){
 //        	System.out.println("用户未登录");
         	LoginInf.username = null;
-        	// 访问的URL如果包含html但是又不是login.html,那么就重定向到login.html页面
-        	if(request.getRequestURI().indexOf(".html") != -1 && request.getRequestURI().indexOf("login.html")==-1){
+        	// 访问的URL如果包含jsp但是又不是login.jsp,那么就重定向到login.html页面
+        	if(request.getRequestURI().indexOf(".jsp") != -1 && request.getRequestURI().indexOf("login.jsp")==-1){
         		System.out.println("重定向到登录界面");
-        		response.sendRedirect(contextPath + "/login/login.html");
+        		response.sendRedirect(contextPath + "/login/login.jsp");
         	}
         }
         else{

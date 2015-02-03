@@ -1,6 +1,9 @@
 package com.nianhong.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.List;
@@ -15,12 +18,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.nianhong.model.WaitVerify;
 import com.nianhong.service.SalerService;
+import com.nianhong.service.TaskService;
 import com.nianhong.service.impl.ServiceHelper;
 import com.nianhong.util.LoginInf;
+import com.nianhong.vo.TaskGetVO;
 
 @Controller
 @RequestMapping("saler")
 public class SalerTaskController {
+	
+	private TaskService taskService = ServiceHelper.getTaskService();
 
 	/**
 	 * 加载雇主所有等待的任务
@@ -151,5 +158,49 @@ public class SalerTaskController {
 	public boolean sureDeal(String taskGetID) {
 		SalerService salerService = ServiceHelper.getSalerService();
 		return salerService.sureDeal(taskGetID);
+	}
+	
+	/**
+	 * 获取买家提交的任务完成信息
+	 * 
+	 * @param st
+	 */
+	@RequestMapping(value = "loadBuyerSubmitInf.do", method = RequestMethod.POST)
+	@ResponseBody
+	public TaskGetVO loadBuyerSubmitInf(int taskGetID) {
+		return taskService.getTaskGetVO(taskGetID);
+	}
+	
+	/**
+	 * 加载图片
+	 * 
+	 * @param fileName
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "getPic.do", method = RequestMethod.GET)
+	public void getPic(String fileName, HttpServletRequest request, HttpServletResponse response) throws IOException{
+		fileName = request.getSession().getServletContext().getRealPath("/")+"upload/"+fileName;
+		File file = new File(fileName);
+		System.out.println(fileName);
+        //判断文件是否存在如果不存在就返回默认图标
+        if(!(file.exists() && file.canRead())) {
+            file = new File(request.getSession().getServletContext().getRealPath("/")
+                    + "resource/icons/auth/root.png");
+        }
+        
+        FileInputStream inputStream = new FileInputStream(file);
+        byte[] data = new byte[(int)file.length()];
+        inputStream.read(data);
+        inputStream.close();
+
+        response.setContentType("image/png");
+
+        OutputStream stream = response.getOutputStream();
+        stream.write(data);
+        stream.flush();
+        stream.close();
+        
 	}
 }

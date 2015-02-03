@@ -1,10 +1,12 @@
 package com.nianhong.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.nianhong.model.Task;
 import com.nianhong.vo.SalerInfVO;
 import com.nianhong.vo.SubTaskVO;
+import com.nianhong.vo.TaskGetVO;
 import com.nianhong.vo.TaskVO;
 
 /**
@@ -55,4 +57,21 @@ public interface TaskService {
 	 * @return
 	 */
 	public SubTaskVO getTaskVOBySubtaskID(String accepter, int subtaskid);
+	
+	/**
+	 * 获取task_get信息
+	 * 
+	 * @param taskGetID
+	 * @return
+	 */
+	public TaskGetVO getTaskGetVO(int taskGetID);
+	
+	/**
+	 * 获取买家与买家间的交易记录
+	 * 
+	 * @param check
+	 * @param checked
+	 * @return
+	 */
+	public List<Map<String, Object>> getDealRecord(String check, String checked);
 }

@@ -3,7 +3,9 @@ package com.nianhong.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ import com.nianhong.service.TaskService;
 import com.nianhong.util.LoginInf;
 import com.nianhong.vo.SalerInfVO;
 import com.nianhong.vo.SubTaskVO;
+import com.nianhong.vo.TaskGetVO;
 import com.nianhong.vo.TaskVO;
 
 @Service
@@ -117,6 +120,53 @@ public class TaskServiceImpl implements TaskService{
 		stvo.setTaskModel(taskDao.selectTaskByID(st.getTask_id()));
 		
 		return stvo;
+	}
+
+	@Override
+	public TaskGetVO getTaskGetVO(int taskGetID) {
+		
+		TaskGet tg = taskGetDao.selectByID(taskGetID);
+		TaskGetVO tgvo = new TaskGetVO();
+		if(tg == null) {
+			return null;
+		} 
+		tgvo.setTaskGetModel(tg);
+		tgvo.setTaskModel(taskDao.selectTaskByID(tg.getTask_id()));
+		tgvo.setSubTaskModel(subTaskDao.selectByID(tg.getSub_task_id()));
+		
+		//获取图片详情
+		String path = tg.getPic_address();
+		tgvo.setPicPaths(path.split("&"));
+		//获取个人信息
+		User u = userDao.selectByUsername(tg.getAccepter());
+		int inf = tg.getPersonal_inf();
+		Map<String, Object> perInf = new HashMap<String, Object>();
+		if((inf&4) != 0) {
+			//拥有银行卡信息
+			perInf.put("银行卡", u.getBanknumber());
+		}
+		if((inf&2) != 0) {
+			//拥有财富通信息
+			perInf.put("财富通", u.getCaifutong());
+		}
+		if((inf&1) != 0) {
+			//拥有支付宝信息
+			perInf.put("支付宝", u.getZhifubao());
+		}
+		String others = tg.getOthers();
+		if(null != others && (!others.equals(""))) {
+			perInf.put("others", others);
+		}
+		
+		tgvo.setPersonInf(perInf);
+		
+		return tgvo;
+	}
+
+	@Override
+	public List<Map<String, Object>> getDealRecord(String check, String checked) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

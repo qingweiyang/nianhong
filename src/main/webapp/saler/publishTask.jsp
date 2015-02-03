@@ -13,7 +13,6 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-  loadNav();
   loadType();
   //地域信息初始化
   loadProvince();
@@ -118,24 +117,13 @@ function loadType() {
     });
 };
 
-function loadNav() {
-    $.ajax({  
-      type: "post",
-      dataType: "text",
-      url: "../nav/navigation.jsp",
-      success: function(data){
-        $("#nav").html(data);
-      },
-      error: function(data){}
-    }); 
-}
-
 </script>
 
 </head>
 <body>
 <div id="wrapper">  
-<div id="nav"></div>
+  <!-- 导航栏 -->
+  <%@ include file="../nav/navigation.jsp" %>
 
 <form class="form-horizontal" role="form">
 

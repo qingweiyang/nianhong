@@ -9,8 +9,8 @@ $(document).ready(function(){
 /*买家提交完成任务信息
 *    param 子任务id
 */
-function submitTaskInf(subTaskID) {
-  location.href = "./SubmitTaskInf.jsp?subTaskID="+subTaskID;
+function submitTaskInf(subTaskID, taskGetID) {
+  location.href = "./SubmitTaskInf.jsp?subTaskID="+subTaskID+"&taskGetID="+taskGetID;
 }
 
 
@@ -28,7 +28,7 @@ function loadWaitedTable() {
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
           var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
           var status_show;
-          var option = "<div><a href='javascript:void(0);' onclick='submitTaskInf("+item.sub_task_id+");'>提交完成信息</a></div>";
+          var option = "<div><a href='javascript:void(0);' onclick='submitTaskInf("+item.sub_task_id+","+item.taskGetID+");'>提交完成信息</a></div>";
 
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+

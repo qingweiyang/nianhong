@@ -20,6 +20,12 @@ public class User {
 	private int status;
 	
 	private int vip;
+	
+	private String banknumber;
+	
+	private String zhifubao;
+	
+	private String caifutong;
 
 	public String getUsername() {
 		return username;
@@ -91,6 +97,30 @@ public class User {
 
 	public void setVip(int vip) {
 		this.vip = vip;
+	}
+
+	public String getBanknumber() {
+		return banknumber;
+	}
+
+	public void setBanknumber(String banknumber) {
+		this.banknumber = banknumber;
+	}
+
+	public String getZhifubao() {
+		return zhifubao;
+	}
+
+	public void setZhifubao(String zhifubao) {
+		this.zhifubao = zhifubao;
+	}
+
+	public String getCaifutong() {
+		return caifutong;
+	}
+
+	public void setCaifutong(String caifutong) {
+		this.caifutong = caifutong;
 	}
 	
 	

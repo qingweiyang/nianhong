@@ -123,9 +123,9 @@ public class BuyerServiceImpl implements BuyerService{
 	}
 
 	@Override
-	public boolean submitTask(String username, int subTaskID, String describe, String picAddress, int personInf, String others) {
-		//因为一个用户只能接收同一个任务一次
-		TaskGet taskGet = taskGetDao.selectBySubTaskIDAndAccepter(subTaskID, username).get(0);
+	public boolean submitTask(int taskGetID, String describe, String picAddress, int personInf, String others) {
+	
+		TaskGet taskGet = taskGetDao.selectByID(taskGetID);
 		System.out.println(taskGet.getId());
 		taskGet.setDescription(describe);
 		taskGet.setPic_address(picAddress);
@@ -133,6 +133,12 @@ public class BuyerServiceImpl implements BuyerService{
 		taskGet.setOthers(others);
 		//更新状态为:已提交完成信息（3）
 		taskGet.setStatus(3);
+		//更新完成时间
+		//获取系统（服务器）当前时间
+		Calendar now = Calendar.getInstance();
+		Date date = now.getTime();
+		taskGet.setFinish_time(date);
+		
 		return taskGetDao.updateTaskGet(taskGet);
 	}
 
