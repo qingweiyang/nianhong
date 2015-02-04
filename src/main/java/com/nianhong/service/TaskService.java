@@ -73,5 +73,5 @@ public interface TaskService {
 	 * @param checked
 	 * @return
 	 */
-	public List<Map<String, Object>> getDealRecord(String check, String checked);
+	public List<Map<String, Object>> getDealRecord(String publisher, String accepter);
 }

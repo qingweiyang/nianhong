@@ -2,6 +2,7 @@ package com.nianhong.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -113,4 +114,13 @@ public interface TaskDao {
 	 * @return
 	 */
 	public List<HashMap<String, Object>> selectBuyerTask(@Param(value="accepter") String accepter, @Param(value="status") int status);
+
+	/**
+	 * 选择雇主与买家的交易记录
+	 * 
+	 * @param publisher
+	 * @param accepter
+	 * @return
+	 */
+	public List<Map<String, Object>> selectDeal(@Param(value="publisher") String publisher, @Param(value="accepter") String accepter);
 }

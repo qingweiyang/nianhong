@@ -56,6 +56,13 @@
 		from task, task_get
 		where task_get.accepter = #{accepter} and task_get.status = #{status} and task.id = task_get.task_id
 	</select>
+	
+	<select id="selectDeal" resultType="map">
+		select task.id, task.publisher, task.publish_time, task.brief, task_get.sub_task_id, task_get.id as taskGetID, task_get.accepter, task_get.accept_time, task_get.finish_time, task_get.status, task_get.remark
+		from task, task_get
+		where task.publisher = #{publisher} and task_get.accepter = #{accepter} and task.id = task_get.task_id
+	</select>
+	
 	<!-- 
 	<select id="selectWaitVerifyModel" resultType="WaitVerify">
 		select task.id, task.publish_time, task.brief,  task_get.accepter, task_get.accept_time, user.area

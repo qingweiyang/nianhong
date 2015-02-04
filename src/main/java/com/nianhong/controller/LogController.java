@@ -22,7 +22,7 @@ import com.nianhong.util.LoginInf;
  *
  */
 @Controller
-@RequestMapping(value={"/taskRoom", "/saler", "/login", "/nav", "/buyer"})
+@RequestMapping(value={"*/"})
 public class LogController {
 
 	private UserService userService = ServiceHelper.getUserService();

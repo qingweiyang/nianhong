@@ -164,9 +164,8 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getDealRecord(String check, String checked) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, Object>> getDealRecord(String publisher, String accepter) {
+		return taskDao.selectDeal(publisher, accepter);
 	}
 
 }
