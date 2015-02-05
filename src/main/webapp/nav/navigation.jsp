@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<script type="text/javascript" src="../jquery/jquery-1.11.2.min.js"></script>
-
 <script type="text/javascript">
 $(document).ready(function(){
   loadUsername();
@@ -48,7 +46,7 @@ $.post(
         <ul class="dropdown-menu">
           <li><a id="profile" href="../saler/publishTask.jsp">发布任务</a></li>
           <li><a id="edit" href="../saler/task.jsp">我的任务</a></li>
-          <li><a id="edit" href="javascript:void(0)">加入任务宝</a></li>
+          <li><a id="edit" href="../user/taskbaby.jsp">加入任务宝</a></li>
           <li><a id="edit" href="javascript:void(0)">购买积分</a></li>
         </ul>
       </li>
@@ -56,7 +54,7 @@ $.post(
         <a href="#" id="user-info1" class="dropdown-toggle" data-toggle="dropdown">我是买家<b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a id="profile" href="../buyer/task.jsp">我的任务</a></li>
-          <li><a id="edit" href="javascript:void(0)">加入任务宝</a></li>
+          <li><a id="edit" href="../user/taskbaby.jsp">加入任务宝</a></li>
         </ul>
       </li>
       <li class="dropdown">

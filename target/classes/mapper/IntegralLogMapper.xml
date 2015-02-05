@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nianhong.dao.IntegralLogDao">
+
+	<insert id="insertIntegralLog" parameterType="IntegralLog">
+		insert into Integral_log(initiator, accepter, type, value, status, operate_time, remark)
+		values(#{initiator}, #{accepter}, #{type}, #{value}, #{status}, #{operate_time}, #{remark})
+	</insert>
+
+	<select id="selectByInitiatorAndTypeAndStatus" resultType="IntegralLog">
+		select * 
+		from Integral_log 
+		where initiator = #{initiator} and type = #{type} and status = #{status}
+	</select>
+	
+</mapper>

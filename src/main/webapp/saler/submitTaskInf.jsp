@@ -66,7 +66,6 @@ function loadBuyerSubmitInf(taskGetID) {
         //定义每行展示的图片数量
         var mloop = 4;
         $.each(data.picPaths, function(i, item){
-        	 $("#picInf").append('<img src="getPic.do?fileName='+item+'" height="200" width="200"/>');
            if(i%mloop == 0) {
               picContent += '<div class="row clearfix mt15">';
             }

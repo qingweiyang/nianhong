@@ -214,6 +214,7 @@ function fileChange(target,id) {
         <div class="form-group">
           <label for="exampleInputEmail1">向雇主提交个人信息：</label>
         </div>
+        
         <div class="form-group">
 <label class="checkbox-inline">
   <input type="checkbox" name ="inlineCheckbox1" value="option1"> 银行卡
@@ -224,12 +225,13 @@ function fileChange(target,id) {
 <label class="checkbox-inline">
   <input type="checkbox" name ="inlineCheckbox3" value="option3"> 支付宝
 </label>
+<label class="checkbox-inline">
+            <input type="checkbox" name="inlineCheckbox4" value="option4"> 其他
+          </label>
         </div>
 
         <div class="form-group">
-          <label class="checkbox">
-            <input type="checkbox" name="inlineCheckbox4" value="option4"> 其他
-          </label>
+          
           <textarea class="form-control" rows=3 id="brief-task" name="others" placeholder="请输入其他信息..."></textarea>
         </div>
 

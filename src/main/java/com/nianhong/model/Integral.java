@@ -7,6 +7,8 @@ public class Integral {
 	private double value;
 	
 	private double freeze;
+	
+	private double deposit;
 
 	public String getUsername() {
 		return username;
@@ -30,6 +32,14 @@ public class Integral {
 
 	public void setFreeze(double freeze) {
 		this.freeze = freeze;
+	}
+
+	public double getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(double deposit) {
+		this.deposit = deposit;
 	}
 	
 	
