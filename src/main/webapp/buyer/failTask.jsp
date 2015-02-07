@@ -42,7 +42,7 @@ function loadWaitedTable() {
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
                       "<td>"+item.brief+"</td>"+
-                      "<td>"+getVerifyBuyerButton(item.publisher)+"</td>"+
+                      "<td>"+getVerifyBuyerButton(item.publisher, item.accepter)+"</td>"+
                       "<td>"+acc_time+"</td>"+
                       "<td>"+item.remark+"</td>"+
                       "</tr>";
@@ -54,10 +54,12 @@ function loadWaitedTable() {
 
 };
 
-function getVerifyBuyerButton(name) {
-  $(".username-span").text(name);
+function getVerifyBuyerButton(publisher, accepter) {
+  $(".username-span").text(publisher);
+  var hf = "../user/deal.jsp?publisher="+publisher+"&accepter="+accepter;
+  $(".deal-href").attr("href", encodeURI(hf));
   return $("#test").html();
-};
+}
 
 </script>
 
@@ -69,7 +71,7 @@ function getVerifyBuyerButton(name) {
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">查看交易记录</a></li>
+    <li role="presentation"><a class="deal-href" role="menuitem" tabindex="-1" href="#" target="_blank">交易记录</a></li>
     <li role="presentation" class="divider"></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">好评</a></li>
     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">差评</a></li>

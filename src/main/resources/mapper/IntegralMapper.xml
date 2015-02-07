@@ -16,5 +16,13 @@
 			freeze = #{freeze}
 		where username = #{username}
 	</update>
+	
+	<update id="updateIntegral" parameterType="Integral">
+		update Integral set
+			value = #{value},
+			freeze = #{freeze},
+			deposit = #{deposit}
+		where username = #{username}
+	</update>
 
 </mapper>

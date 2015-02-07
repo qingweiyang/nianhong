@@ -28,4 +28,9 @@ public class IntegralServiceImplTest {
 	public void unfreezeDepositTest() {
 		integralService.unfreezeDeposit("买家", "just soso");
 	}
+	
+	@Test 
+	public void agreePayDepositTest() {
+		integralService.agreePayDeposit("123", 35);
+	}
 }

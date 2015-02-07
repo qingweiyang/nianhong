@@ -15,4 +15,30 @@
 		where initiator = #{initiator} and type = #{type} and status = #{status}
 	</select>
 	
+	<select id="selectByID" resultType="IntegralLog">
+		select * 
+		from Integral_log 
+		where id = #{id}
+	</select>
+	
+	<select id="selectTBByTypeAndStatus" resultType="map">
+		select ur.identity, ur.username, il.id, il.value, il.remark, integ.deposit
+		from Integral_log il, Integral integ, user ur
+		where il.type = #{type} and il.status = #{status} and il.initiator = ur.username and integ.username = ur.username
+	</select>
+	
+	<!-- 根据IntegralLog的id为主键，更新除ID外的所有属性值 -->
+	<update id="updateIntegralLog" parameterType="IntegralLog">
+		update Integral_log set
+			initiator = #{initiator},
+			accepter = #{accepter},
+			type = #{type},
+			value = #{value},
+			status = #{status},
+			status = #{status},
+			operate_time = #{operate_time},
+			remark = #{remark}
+		where id = #{id}	
+	</update>
+	
 </mapper>

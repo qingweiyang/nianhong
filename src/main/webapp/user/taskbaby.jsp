@@ -258,9 +258,9 @@ function unfreezeDeposit() {
 
 <form class="form-horizontal">
   <div id="pay-deposit-form" class="form-group">
-    <label for="inputEmail3" class="col-md-offset-2  col-sm-2 control-label">申请理由</label>
+    <label for="inputEmail3" class="col-md-offset-2  col-sm-2 control-label">理由：</label>
     <div class="col-sm-6">
-      <input id="pay-unfreeze-val" type="text" class="form-control" placeholder="申请理由...">
+      <input id="pay-unfreeze-val" type="text" class="form-control" placeholder="理由...">
     </div>
   </div>
   <div id="pay-result-message" class="alert alert-dismissable alert-danger" style="display:none">

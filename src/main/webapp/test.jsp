@@ -36,112 +36,74 @@
 </script>
 </head>
 <body>
-<div id="wrapper" class="container">
-	
-  <%@ include file="../nav/navigation.jsp" %>
-  
-  <div class="row clearfix">
-    <div class="col-md-12 column">
-    	<img class="img-rounded" src="../res/background.jpg" height="200" width="100%"/>
-    </div>
-   </div>
 
-  <div class="row clearfix mt15">
-    <div class="col-md-12 column">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="thumbnail">
-            <img alt="300x200" src="../res/background.jpg" />
-            <div class="caption">
-              <h3>
-                缴纳保证金简介
-              </h3>
-              <p>
-                保证金缴纳成功后展示在您的个人资料与发布／接受任务个人信息区，让双方看到彼此的保障实力，更诚信的交易，从保障实力开始！
-              </p>
-              <p>
-                 <!-- Button trigger modal -->
-                 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#modal-container-688942">
-                  缴纳保证金
-                 </button>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="thumbnail">
-            <img alt="300x200" src="../res/background.jpg" />
-            <div class="caption">
-              <h3>
-                查询保证金简介
-              </h3>
-              <p>
-                支持保证金的缴纳、解冻、及扣款等记录查询；保证金明细一目了然！<br/>&nbsp;<br/>&nbsp;
-              </p>
-              <p>
-                 <!-- Button trigger modal -->
-                 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#myModal">
-                  查询保证金
-                 </button>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="thumbnail">
-            <img alt="300x200" src="../res/background.jpg" />
-            <div class="caption">
-              <h3>
-                解冻保证金简介
-              </h3>
-              <p>
-                当您五进行中和保障期内的交易、赔付、维权等，即可以操作申请解冻保证金<br/>&nbsp;<br/>&nbsp;
-              </p>
-              <p>
-                 <!-- Button trigger modal -->
-                 <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#edit-modal">
-                  解冻保证金
-                 </button>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="navbar navbar-inverse navbar-fixed-top navbar-layoutit">
+		<div class="navbar-header">
+			<button data-target="navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
+				<span class="glyphicon-bar"></span>
+				<span class="glyphicon-bar"></span>
+				<span class="glyphicon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">
+				<img src="http://ibootstrap-file.b0.upaiyun.com/www.layoutit.com/img/favicon.png">
+				ibootstrap
+				<span class="label label-default">BETA</span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse">
 
-</div>
+			<ul class="nav pull-right">
+				<li>
 
+					<div class="btn-group btn-donate pull-right"></div>
 
-<!-- Modal -->
-<div class="modal fade" id="modal-container-688942" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">缴纳保证金</h4>
-      </div>
-      <div class="modal-body">
-
-<form class="form-horizontal">
-  <div id="pay-deposit-form" class="form-group">
-    <label for="inputEmail3" class="col-md-offset-2  col-sm-2 control-label">缴纳金额</label>
-    <div class="col-sm-4">
-      <input id="pay-deposit-val" type="text" class="form-control" placeholder="积分数额...">
-    </div>
-    <label class="col-sm-2 control-label">积分</label>
-  </div>
-  <div id="pay-result-message" class="alert alert-dismissable alert-danger" style="display:none">
-  </div>
-</form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button id="pay-sure" type="button" class="btn btn-primary">确认</button>
-      </div>
-    </div>
-  </div>
+					<div class="btn-group" data-toggle="buttons-radio">
+						<button role="button" data-toggle="modal" data-target="#feedbackModal" id="feedback" class="btn btn-xs btn-primary active"> <i class="glyphicon-comment glyphicon"></i>
+							联系我们
+						</button>
+					</div>
+				</li>
+			</ul>
+			<ul class="nav" id="menu-layoutit">
+				<li>
+					<div class="btn-group" data-toggle="buttons-radio">
+						<button type="button" id="edit" class="active btn btn-xs btn-primary"> <i class="glyphicon glyphicon-edit "></i>
+							编辑
+						</button>
+						<button type="button" class="btn btn-xs btn-primary" id="devpreview">
+							<i class="glyphicon-eye-close glyphicon"></i>
+							开发
+						</button>
+						<button type="button" class="btn btn-xs btn-primary" id="sourcepreview">
+							<i class="glyphicon-eye-open glyphicon"></i>
+							预览
+						</button>
+					</div>
+					<div class="btn-group">
+						<button type="button" class="btn btn-xs btn-primary" id="button-download-modal" data-target="#downloadModal" role="button" data-toggle="modal"> <i class="glyphicon-chevron-down glyphicon"></i>
+							下载
+						</button>
+						<!--  <button class="btn btn-xs btn-primary" id="button-share-modal" href="/share/indexV3" role="button" data-toggle="modal" data-target="#shareModal"> <i class="glyphicon-share glyphicon"></i>
+						分享
+					</button>
+					-->
+					<button class="btn btn-xs btn-primary" href="#clear" id="clear">
+						<i class="glyphicon-trash glyphicon"></i>
+						清空
+					</button>
+					</div>
+					<div class="btn-group">
+						<a href="/v2">
+						<button type="button" class="btn btn-xs btn-primary">
+							前往2.0版本 
+							<i class="glyphicon-chevron-right glyphicon"></i>
+						</button>
+						</a>
+					</div>
+			</li>
+		</ul>
+	</div>
+	<!--/.navbar-collapse -->
 </div>
     
 </body>

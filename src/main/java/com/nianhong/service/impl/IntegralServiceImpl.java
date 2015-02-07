@@ -2,6 +2,7 @@ package com.nianhong.service.impl;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -94,6 +95,144 @@ public class IntegralServiceImpl implements IntegralService{
 	@Override
 	public List<IntegralLog> unfreezeDepositStatus(String unfreezer) {
 		return integralLogDao.selectByInitiatorAndTypeAndStatus(unfreezer, 2, 1);
+	}
+
+	@Override
+	public Message agreePayDeposit(String admin, int integralLogID) {
+		Message msg = new Message();
+		
+		IntegralLog integralLog = integralLogDao.selectByID(integralLogID);
+		Integral integral = integralDao.selectByUsername(integralLog.getInitiator());
+		
+		//判断申请金额是否大于用户流动积分总额
+		double val = integralLog.getValue();
+		if(val > integral.getValue()) {
+			//申请金额是否大于用户流动积分总额，操作失败
+			 msg.setStatus(false);
+			 String cont = "error:用户申请金额："+val+",高于该用户流动金额："+integral.getValue();
+			 msg.addCont(cont);
+			 System.out.println(cont);
+			 integralLog.setStatus(4);
+			 integralLog.setRemark(cont);
+			 return msg;
+		}
+		
+		//同意申请操作
+		//integral将value值存放到deposit中
+		integral.setValue(integral.getValue()-val);
+		integral.setDeposit(integral.getDeposit()+val);
+		if(!integralDao.updateIntegral(integral)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralDao.updateIntegral(integral)");
+		}
+		
+		//修改integral_log status
+		integralLog.setStatus(2);
+		integralLog.setAccepter(admin);
+		integralLog.setOperate_time(Calendar.getInstance().getTime());
+		if(!integralLogDao.updateIntegralLog(integralLog)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralLogDao.updateIntegralLog(integralLog)");
+		}
+		
+		return msg;
+	}
+
+	@Override
+	public Message refusePayDeposit(String admin, int integralLogID) {
+		Message msg = new Message();
+		
+		IntegralLog integralLog = integralLogDao.selectByID(integralLogID);
+		integralLog.setStatus(3);
+		integralLog.setAccepter(admin);
+		integralLog.setRemark("管理员拒绝");
+		integralLog.setOperate_time(Calendar.getInstance().getTime());
+		
+		if(!integralLogDao.updateIntegralLog(integralLog)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralLogDao.updateIntegralLog(integralLog)");
+		}
+		
+		return msg;
+	}
+
+	@Override
+	public Message agreeUnfreezeDeposit(String admin, int integralLogID) {
+		Message msg = new Message();
+		
+		IntegralLog integralLog = integralLogDao.selectByID(integralLogID);
+		Integral integral = integralDao.selectByUsername(integralLog.getInitiator());
+		
+		//对用户积分解冻操作，更新integral表数据(这里默认将deposit值全部解冻)
+		integral.setValue(integral.getValue()+integral.getDeposit());
+		integral.setDeposit(0);
+		if(!integralDao.updateIntegral(integral)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralDao.updateIntegral(integral)");
+		}
+		
+		//修改integral_log状态
+		integralLog.setStatus(2);
+		integralLog.setAccepter(admin);
+		integralLog.setOperate_time(Calendar.getInstance().getTime());
+		if(!integralLogDao.updateIntegralLog(integralLog)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralLogDao.updateIntegralLog(integralLog)");
+		}
+		
+		return msg;
+	}
+
+	@Override
+	public Message refuseUnfreezeDeposit(String admin, int integralLogID) {
+		Message msg = new Message();
+		
+		IntegralLog integralLog = integralLogDao.selectByID(integralLogID);
+		integralLog.setStatus(3);
+		integralLog.setAccepter(admin);
+		integralLog.setRemark("管理员拒绝");
+		integralLog.setOperate_time(Calendar.getInstance().getTime());
+		
+		if(!integralLogDao.updateIntegralLog(integralLog)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralLogDao.updateIntegralLog(integralLog)");
+		}
+		
+		return msg;
+	}
+
+	@Override
+	public List<Map<String, Object>> getIntegralIn() {
+		return integralLogDao.selectTBByTypeAndStatus(1, 1);
+	}
+
+	@Override
+	public List<Map<String, Object>> getIntegralUnfreeze() {
+		return integralLogDao.selectTBByTypeAndStatus(2, 1);
+	}
+
+	@Override
+	public Message reduceDeposit(String operator, String username, double value) {
+		Message msg = new Message();
+		
+		Integral integral = integralDao.selectByUsername(username);
+		//用户当前任务宝额度不足，扣减失败
+		double actVal = integral.getDeposit();
+		if(value > actVal) {
+			msg.setStatus(false);
+			String cont = "error:用户任务宝额度 "+actVal+",小于扣减额度："+value;
+			msg.addCont(cont);
+			return msg;
+		}
+		
+		//扣减积分操作
+		integral.setDeposit(actVal - value);
+		if(!integralDao.updateIntegral(integral)) {
+			msg.setStatus(false);
+			msg.addCont("数据库更新错误，integralDao.updateIntegral(integral)");
+		}
+		
+		return msg;
 	}
 
 }

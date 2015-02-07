@@ -17,5 +17,5 @@ public interface IntegralDao {
 	public boolean updateValueAndFreezeByUsername(@Param(value="username") String username, 
 			@Param(value="value") double value, @Param(value="freeze") double freeze);
 	
-	
+	public boolean updateIntegral(Integral integral);
 }
