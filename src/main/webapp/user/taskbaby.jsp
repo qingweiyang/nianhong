@@ -126,7 +126,7 @@ function unfreezeDeposit() {
   
   <div class="row clearfix">
     <div class="col-md-12 column">
-    	<img class="img-rounded" src="../res/background.jpg" height="200" width="100%"/>
+    	<img class="img-rounded" src="../res/image/example.jpg" height="200" width="100%"/>
     </div>
    </div>
 
@@ -135,7 +135,7 @@ function unfreezeDeposit() {
       <div class="row">
         <div class="col-md-4">
           <div class="thumbnail">
-            <img alt="300x200" src="../res/background.jpg" />
+            <img alt="300x200" src="../res/image/example.jpg" />
             <div class="caption">
               <h3>
                 缴纳保证金简介
@@ -154,7 +154,7 @@ function unfreezeDeposit() {
         </div>
         <div class="col-md-4">
           <div class="thumbnail">
-            <img alt="300x200" src="../res/background.jpg" />
+            <img alt="300x200" src="../res/image/example.jpg" />
             <div class="caption">
               <h3>
                 查询保证金简介
@@ -173,7 +173,7 @@ function unfreezeDeposit() {
         </div>
         <div class="col-md-4">
           <div class="thumbnail">
-            <img alt="300x200" src="../res/background.jpg" />
+            <img alt="300x200" src="../res/image/example.jpg" />
             <div class="caption">
               <h3>
                 解冻保证金简介

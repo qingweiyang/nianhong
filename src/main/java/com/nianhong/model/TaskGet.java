@@ -31,6 +31,8 @@ public class TaskGet {
 	//买家提交任务信息 ： 其他信息（可选项）
 	private String others;
 	
+	private Date submit_time;
+	
 	public int getId() {
 		return id;
 	}
@@ -125,6 +127,14 @@ public class TaskGet {
 
 	public void setOthers(String others) {
 		this.others = others;
+	}
+
+	public Date getSubmit_time() {
+		return submit_time;
+	}
+
+	public void setSubmit_time(Date submit_time) {
+		this.submit_time = submit_time;
 	}
 	
 	

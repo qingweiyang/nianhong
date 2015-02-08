@@ -1,6 +1,7 @@
 package com.nianhong.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -61,16 +62,38 @@ public class TaskServiceImpl implements TaskService{
 	}
 
 	@Override
-	public SalerInfVO getSalerInf(String username) {
+	public SalerInfVO getSalerInf(String id, String accepter) {
 		SalerInfVO sale = new SalerInfVO();
-		User u = userDao.selectByUsername(username);
-		sale.setSalerName(username);
+		Task task = taskDao.selectTaskByID(id);
+		String publisher = task.getPublisher();
 		
+		sale.setSalerName(publisher);
+		
+		//获取双方本月交易次数
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		int monthCount = taskGetDao.selectCountByDealtimeAndStatus(publisher, accepter, 4, calendar.getTime(), 
+				Calendar.getInstance().getTime());
+		sale.setThisMonth(monthCount);
+		//获取本周双方交易次数(周末为一周的第一天。。。)
+		Calendar calendarWeek = Calendar.getInstance();
+		calendarWeek.set(Calendar.DAY_OF_WEEK, 1);
+		int weekCount = taskGetDao.selectCountByDealtimeAndStatus(publisher, accepter, 4, 
+				calendarWeek.getTime(),
+				Calendar.getInstance().getTime());
+		sale.setThisWeek(weekCount);
+		//获取本年双方交易次数
+		Calendar calendarYear = Calendar.getInstance();
+		calendarYear.set(Calendar.DAY_OF_YEAR, 1);
+		int yearCount = taskGetDao.selectCountByDealtimeAndStatus(publisher, accepter, 4, 
+				calendarYear.getTime(),
+				Calendar.getInstance().getTime());
+		sale.setThisYear(yearCount);
 		return sale;
 	}
 
 	@Override
-	public TaskVO getTaskVOByID(String accepter, String taskID) {
+	public TaskVO getTaskVOByID(String accepter, String taskID) { 
 		//accepter被认定为登入用户
 		accepter = LoginInf.username;
 		

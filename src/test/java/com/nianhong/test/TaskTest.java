@@ -1,5 +1,7 @@
 package com.nianhong.test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import org.junit.Before;
@@ -9,11 +11,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.nianhong.dao.TaskDao;
+import com.nianhong.dao.TaskGetDao;
 import com.nianhong.model.SubTask;
 import com.nianhong.model.Task;
 import com.nianhong.model.User;
 import com.nianhong.service.TaskService;
 import com.nianhong.service.UserService;
+import com.nianhong.vo.SalerInfVO;
 import com.nianhong.vo.TaskVO;
 
 public class TaskTest {
@@ -21,6 +25,9 @@ public class TaskTest {
 	
 	@Autowired
 	private TaskDao taskDao;
+	
+	@Autowired
+	private TaskGetDao taskGetDao;
 	
 	@Before
 	public void before(){                                                                    
@@ -49,5 +56,16 @@ public class TaskTest {
 	public void testSelectTaskByID() {
 		Task t = taskService.getTaskByID("20150120192510");
 		System.out.println(t.getSubTasks().size());
+	}
+	
+	@Test
+	public void testGetSalerInf() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_WEEK, 1);
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.print(sf.format(calendar.getTime()));
+		//获取双方本月交易次数
+//		SalerInfVO siv = taskService.getSalerInf( "20150120144506", "杨庆苇2");
+//		System.out.print(siv.getThisMonth());
 	}
 }

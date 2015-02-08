@@ -1,5 +1,6 @@
 package com.nianhong.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -37,6 +38,18 @@ public interface TaskGetDao {
 	public List<TaskGet> selectByAccepterAndTaskID(@Param(value="accepter") String accepter,
 			@Param(value="taskID") String taskID);
 
+	/**
+	 * 统计雇主与卖家在要求的时间段内交易的次数
+	 * 
+	 * @param publisher
+	 * @param accepter
+	 * @param startTime
+	 * @param finishTime
+	 * @return
+	 */
+	public int selectCountByDealtimeAndStatus(@Param(value="publisher") String publisher, @Param(value="accepter")String accepter,
+			@Param(value="status")int status, @Param(value="startTime")Date startTime, @Param(value="finishTime")Date finishTime);
+	
 	/**
 	 * 获取状态为 2，3，4 的任务接受列
 	 * 

@@ -34,7 +34,7 @@ function getDealRecord(publisher, accepter) {
       function(data) {
         var text = "";
         $.each(data,function(i,item){
-          $("#deal-username").text(item.publisher);
+          $("#deal-username").text("雇主>"+item.publisher+" 买家>"+item.accepter);
           var time = getFormatDateByLong(item.publish_time, "yyyy-MM-dd hh:mm:ss");
           var acc_time = getFormatDateByLong(item.accept_time, "yyyy-MM-dd hh:mm:ss");
           var relation = "交易失败："+item.remark;
@@ -73,7 +73,7 @@ function getDealRecord(publisher, accepter) {
 
   <div class="panel panel-success">
   <!-- Default panel contents -->
-  <div class="panel-heading">雇主：<span id="deal-username"></span></div>
+  <div class="panel-heading">交易双方：<span id="deal-username"></span></div>
 
   <table id="deal-table" class="table table-bordered table-hover table-condensed">
     <thead>

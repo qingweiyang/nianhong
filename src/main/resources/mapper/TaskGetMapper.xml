@@ -54,6 +54,15 @@
         	]]>
 	</select>
 	
+	<select id="selectCountByDealtimeAndStatus" resultType="int">
+		select count(*)
+		from task_get tg, task
+		where tg.task_id=task.id and task.publisher=#{publisher} and tg.accepter=#{accepter} and tg.status=#{status} and
+		<![CDATA[
+		tg.finish_time between #{startTime} and #{finishTime}
+		]]>
+	</select>
+	
 	<!-- 根据TaskGet的id为主键，更新除ID外的所有属性值 -->
 	<update id="updateTaskGet" parameterType="TaskGet">
 		update task_get set
@@ -66,7 +75,9 @@
 			remark = #{remark},
 			pic_address = #{pic_address},
 			personal_inf = #{personal_inf},
-			description = #{description}
+			description = #{description},
+			others = #{others},
+			submit_time = #{submit_time}
 		where id = #{id}	
 	</update>
 	

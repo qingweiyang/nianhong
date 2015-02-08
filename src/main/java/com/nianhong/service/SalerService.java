@@ -6,6 +6,7 @@ import java.util.List;
 import com.nianhong.model.SalerTaskDoing;
 import com.nianhong.model.Task;
 import com.nianhong.model.WaitVerify;
+import com.nianhong.util.Message;
 import com.nianhong.vo.TaskVO;
 
 public interface SalerService {
@@ -17,7 +18,7 @@ public interface SalerService {
 	 * @param task
 	 * @return
 	 */
-	public boolean publishTask(String user, TaskVO task);
+	public Message publishTask(String user, TaskVO task);
 	
 	/**
 	 * 加载任务类别

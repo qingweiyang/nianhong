@@ -21,6 +21,7 @@ import com.nianhong.model.Task;
 import com.nianhong.model.User;
 import com.nianhong.model.WaitVerify;
 import com.nianhong.service.SalerService;
+import com.nianhong.util.Message;
 import com.nianhong.vo.SubTaskVO;
 import com.nianhong.vo.TaskVO;
 
@@ -39,7 +40,9 @@ public class SalerServiceImpl implements SalerService{
 	private UserDao userDao;
 	
 	@Override
-	public boolean publishTask(String user, TaskVO taskvo) {
+	public Message publishTask(String user, TaskVO taskvo) {
+		Message msg = new Message();
+		
 		Task task = new Task();
 		task.setAdvanced(taskvo.getAdvanced());
 		task.setBrief(taskvo.getBrief());
@@ -83,7 +86,7 @@ public class SalerServiceImpl implements SalerService{
 			subTaskDao.insertSubTask(st);
 		}
 		
-		return true;
+		return msg;
 	}
 
 	@Override

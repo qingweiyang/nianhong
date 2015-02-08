@@ -36,10 +36,11 @@ public interface TaskService {
 	/**
 	 * 获取卖家基本信息，信息要求对应salerInfVO
 	 * 
-	 * @param username
+	 * @param id 任务的id
+	 * @param accepter 买家的姓名
 	 * @return
 	 */
-	public SalerInfVO getSalerInf(String username);
+	public SalerInfVO getSalerInf(String id, String accepter);
 	
 	/**
 	 * 根据任务id获取任务信息，信息格式为TaskVO

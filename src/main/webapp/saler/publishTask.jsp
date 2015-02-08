@@ -13,6 +13,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+  loadNav();
   loadType();
   //地域信息初始化
   loadProvince();
@@ -41,16 +42,14 @@ $(document).ready(function(){
 
     task.subtask = [];
     $(".subtask-item").each(function(index, item){
-      alert(($(item).children("input:eq(0)")).val());
       var row = {}
       row.startTime = $(item).children("input:eq(0)").val();
       row.finishTime = $(item).children("input:eq(1)").val();
-      row.province = $(item).children("select:eq(2)").val();
-      row.city = $(item).children("select:eq(3)").val();
+      row.province = $(item).children("select:eq(0)").val();
+      row.city = $(item).children("select:eq(1)").val();
       row.subNum = $(item).children("input:eq(2)").val();
       task.subtask.push(row);
     });
-    alert(JSON.stringify(task));
 
     $.ajax({
       type : "POST",
@@ -59,9 +58,11 @@ $(document).ready(function(){
       data : JSON.stringify(task), 
       dataType: "json",
       success : function(data) {
-        alert("good!!!!!");
+        location.href = "sureEnd.jsp";
       },
-      error : function(){}
+      error : function(){
+    	location.href = "sureEnd.jsp";
+      }
     });
 
   });
@@ -117,13 +118,24 @@ function loadType() {
     });
 };
 
+function loadNav() {
+    $.ajax({  
+      type: "post",
+      dataType: "text",
+      url: "../nav/navigation.jsp",
+      success: function(data){
+        $("#nav").html(data);
+      },
+      error: function(data){}
+    }); 
+}
+
 </script>
 
 </head>
 <body>
 <div id="wrapper">  
-  <!-- 导航栏 -->
-  <%@ include file="../nav/navigation.jsp" %>
+<div id="nav"></div>
 
 <form class="form-horizontal" role="form">
 

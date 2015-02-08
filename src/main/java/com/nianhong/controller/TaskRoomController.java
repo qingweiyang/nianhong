@@ -12,6 +12,8 @@ import com.nianhong.model.Task;
 import com.nianhong.service.BuyerService;
 import com.nianhong.service.TaskService;
 import com.nianhong.service.impl.ServiceHelper;
+import com.nianhong.util.LoginInf;
+import com.nianhong.vo.SalerInfVO;
 import com.nianhong.vo.TaskVO;
 
 /**
@@ -45,6 +47,12 @@ public class TaskRoomController {
 	@ResponseBody
 	public Map<String, Object> acceptTask(int id, String accepter) {
 		return buyerService.acceptTask(accepter, id);
+	}
+	
+	@RequestMapping(value = "loadSalerInf.do", method = RequestMethod.POST)
+	@ResponseBody
+	public SalerInfVO loadSalerInf(String taskID) {
+		return taskService.getSalerInf(taskID, LoginInf.username);
 	}
 	
 }

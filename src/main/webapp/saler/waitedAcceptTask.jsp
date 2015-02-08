@@ -40,7 +40,7 @@ function loadWaitedTable() {
           text += "<tr><td>"+item.id+"</td>"+
                       "<td>"+time+"</td>"+
                       "<td>"+item.brief+"</td>"+
-                      "<td><a href='javascript:void(0);' onclick='javascript:modifyRow("+item.id+",this);'>修改</a>"+
+                      "<td>"+
                       "<a href='javascript:void(0);' onclick='javascript:removeRow("+item.id+",this);'>  删除</a></td></tr>";
         });
         $("#saler-waited-task-table tbody").html(text);

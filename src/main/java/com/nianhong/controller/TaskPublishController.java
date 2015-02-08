@@ -20,6 +20,7 @@ import com.nianhong.service.RegionService;
 import com.nianhong.service.SalerService;
 import com.nianhong.service.impl.ServiceHelper;
 import com.nianhong.util.LoginInf;
+import com.nianhong.util.Message;
 import com.nianhong.vo.TaskVO;
 
 @Controller
@@ -28,9 +29,9 @@ public class TaskPublishController {
 
 	@RequestMapping(value = "publish.do", method = RequestMethod.POST)
 	@ResponseBody
-	public void publishTask(@RequestBody TaskVO st) {
+	public Message publishTask(@RequestBody TaskVO task) {
 		SalerService salerService = ServiceHelper.getSalerService();
-		salerService.publishTask(LoginInf.username, st);
+		return salerService.publishTask(LoginInf.username, task);
 	}
 	
 	/**

@@ -1,18 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ include file="../nav/resource.jsp" %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>年鸿电商交易平台</title>
-<link rel="stylesheet" type="text/css" href="../css/main.css">
 
-<link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-
-<script type="text/javascript" src="../jquery/jquery-1.11.2.min.js"></script>
-<script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>
-
-<script type="text/javascript" src="../js/date-helper.js"></script>
-<script type="text/javascript" src="../js/util.js"></script>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -20,6 +14,7 @@ $(document).ready(function(){
   /*解析url，加载任务详情*/
   var taskID = getUrlParam("id");
   loadTaskInf(taskID, "路人");
+  loadSalerInf(taskID);
 
   /*监听接受任务按钮*/
   $("#accept-button").click(function(){
@@ -44,7 +39,12 @@ function acceptTask() {
 			"acceptTask.do",
 			param,
 			function(data) {
-				alert(data.success);
+				if(data.success == false) {
+					alert("领取失败:"+data.message);
+					
+				} else {
+					location.href = "acceptSuccess.jsp";
+				}
 			}
 			); 
 	}
@@ -90,14 +90,16 @@ function loadTaskInf(taskID, accepter) {
 		});
 }
 
-function loadSalerInf(username) {
+function loadSalerInf(taskID) {
 
 	$.post(
       "loadSalerInf.do",
-      param,
+      "taskID="+taskID,
       function(data){
-        alert("remove");
-        $(item).parent().parent().remove();
+        $("#salerName").text(data.salerName);
+        $("#thisWeek").text(data.thisWeek);
+        $("#thisMonth").text(data.thisMonth);
+        $("#thisYear").text(data.thisYear);
       }  
     );
 }
@@ -128,9 +130,9 @@ function loadSalerInf(username) {
 				</div>
 				<a href="#" class="list-group-item active">双方交易记录展示</a>
 				<div class="list-group-item">
-					<h5>本周 ：<small id="salerName">0</small>笔</h5>
-					<h5>本月 ：<small id="salerLever"></small>笔</h5>
-					<h5>本年 ：<small id="taskBaby"></small>笔</h5>
+					<h5>本周 ：<small id="thisWeek"></small>笔</h5>
+					<h5>本月 ：<small id="thisMonth"></small>笔</h5>
+					<h5>本年 ：<small id="thisYear"></small>笔</h5>
 				</div>
 				<a href="#" class="list-group-item active">卖家已向买家承诺</a>
 				<div class="list-group-item">

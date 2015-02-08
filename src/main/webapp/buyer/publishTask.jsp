@@ -47,7 +47,6 @@ $(document).ready(function(){
       row.subNum = $(item).children("input:eq(2)").val();
       task.subtask.push(row);
     });
-    alert(JSON.stringify(task));
     $.ajax({
       type : "POST",
       contentType : 'application/json', 

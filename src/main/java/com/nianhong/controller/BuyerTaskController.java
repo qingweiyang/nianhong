@@ -124,9 +124,9 @@ public class BuyerTaskController {
 		//其他信息
 		String others = "";
 		if(null != request.getParameter("inlineCheckbox4")) {
-			others = request.getParameter("inlineCheckbox4");
+			others = request.getParameter("others");
 		}
-		
+		System.out.println("others........"+others);
 		//------以下进行图片上传，以及将所有图片上传路径保存在数据库中
 		String picPath = "";
 		String realpath = request.getSession().getServletContext().getRealPath("/");
